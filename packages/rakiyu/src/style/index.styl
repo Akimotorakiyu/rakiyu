@@ -1,14 +1,6 @@
-:root {
-    --std-font-size: 1rem;
-    --std-line-height: 2.6;
-    --std-inline-line-height: 1.8;
-    --std-margin: 0.3em;
-    --std-padding: 0.3em;
-    --std-border-radius: 0.3em;
-    --std-animation-duration: 0.2s;
-    --std-animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-}
-
+/**
+ * 清理部分原生样式装饰
+ */
 input, button, textarea, select, option {
     &:focus {
         outline: none;
@@ -49,10 +41,25 @@ a {
     }
 }
 
+/**
+ * 清理部分原生样式装饰
+ */
+:root {
+    --std-font-size: 1rem;
+    --std-line-height: 2.6;
+    --std-inline-line-height: 1.8;
+    --std-margin: 0.3em;
+    --std-padding: 0.3em;
+    --std-border-radius: 0.3em;
+    --std-animation-duration: 0.2s;
+    --std-animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
 html {
+    // 在chorme中部分input如time会将绝对尺寸降一号
     // font-size: medium;
-    font-size: 1rem;
-    font-family: 'Microsoft YaHei UI', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', emoji, math, fangsong;
+    font-size: 14px;
+    font-family: 'Microsoft YaHei UI', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', emoji, math, fangsong;
     line-height: var(--std-line-height);
 }
 
@@ -61,8 +68,8 @@ html, body {
     height: 100vh;
 }
 
-button {
-    background-color: white;
+body {
+    // background-image: linear-gradient(to top, aliceblue 0%, #e3eeff 99%, #e3eeff 100%);
 }
 
 select, option, button {
@@ -81,7 +88,6 @@ input, button, textarea, select, option, label, code {
     border: none;
     border-radius: var(--std-border-radius);
     font-size: inherit;
-    font-family: inherit;
     line-height: var(--std-inline-line-height);
 }
 
@@ -89,6 +95,10 @@ input, button, textarea, select, option {
     box-shadow: 0 0px 0px 1px rgba(24, 40, 35, 0.06) inset;
     padding: 0 var(--std-padding);
     margin: 0 var(--std-margin);
+}
+
+input {
+    font-family: inherit;
 }
 
 /* i 作为内容使用的为多，不当作行内容器 */
@@ -106,9 +116,18 @@ img {
     vertical-align: middle;
 }
 
+label {
+    display: inline-block;
+    text-align: right;
+}
+
+a {
+    color: cornflowerblue;
+}
+
 button {
     cursor: pointer;
-    background-color: white;
+    background-color: transparent;
 
     &:hover {
         filter: invert(8%);
@@ -142,6 +161,10 @@ table {
             background-color: rgba(#f9f9f9, 0.6);
         }
     }
+}
+
+input[type=number] {
+    padding-right: 0;
 }
 
 input[type=radio] {
@@ -283,5 +306,50 @@ input[type=checkbox] {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+dialog {
+    width: auto;
+    position: fixed;
+    height: 100%;
+    padding: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border: 0;
+    background-color: transparent;
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(#1b1b1b, 0.5);
+        animation-name: fadeIn;
+        animation-duration: var(--std-animation-duration);
+        animation-timing-function: ease-out;
+
+        .content {
+            border-radius: var(--std-border-radius);
+            background-color: white;
+            min-width: 16em;
+            min-height: 2em;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow: auto;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
     }
 }
