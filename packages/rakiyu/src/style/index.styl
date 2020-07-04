@@ -1,0 +1,287 @@
+:root {
+    --std-font-size: 1rem;
+    --std-line-height: 2.6;
+    --std-inline-line-height: 1.8;
+    --std-margin: 0.3em;
+    --std-padding: 0.3em;
+    --std-border-radius: 0.3em;
+    --std-animation-duration: 0.2s;
+    --std-animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+input, button, textarea, select, option {
+    &:focus {
+        outline: none;
+    }
+
+    &::-moz-focus-inner {
+        border: 0;
+    }
+
+    appearance: none;
+    -moz-appearance: none;
+    /* 在 WebKit/Blink 中可用的部分值 */
+    -webkit-appearance: none;
+    /* - -" */
+    padding: 0;
+}
+
+/* 火狐神奇的去掉focus虚线的方式 */
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+ul, ol {
+    list-style: none;
+    /* - -" */
+    padding: 0;
+}
+
+a {
+    &:focus {
+        outline: none;
+    }
+
+    &:link, &:focus, &:visited, &:hover, &:active {
+        /* - -" */
+        text-decoration: none;
+    }
+}
+
+html {
+    // font-size: medium;
+    font-size: 1rem;
+    font-family: 'Microsoft YaHei UI', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', emoji, math, fangsong;
+    line-height: var(--std-line-height);
+}
+
+html, body {
+    margin: 0;
+    height: 100vh;
+}
+
+button {
+    background-color: white;
+}
+
+select, option, button {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+/*
+ *  input 行高问题很恶心，你无法得到一个等于字体大小的行高，在不同的浏览器上的值也不同，强行设置也不行(eg:f-z 16px,l-h 1,firefox l-h 19.25px chrome 18px)
+ *  默认normal值为1.2左右，且与字体相关，所以建议行高大于1.3
+ *  input有的元素为content-box有的为border-box，我本身就不喜欢border，所以直接让border为none
+ *  对于img  textarea 块级元素
+ */
+input, button, textarea, select, option, label, code {
+    border: none;
+    border-radius: var(--std-border-radius);
+    font-size: inherit;
+    font-family: inherit;
+    line-height: var(--std-inline-line-height);
+}
+
+input, button, textarea, select, option {
+    box-shadow: 0 0px 0px 1px rgba(24, 40, 35, 0.06) inset;
+    padding: 0 var(--std-padding);
+    margin: 0 var(--std-margin);
+}
+
+/* i 作为内容使用的为多，不当作行内容器 */
+a, em, strong, cite, code, span {
+    padding: 0 var(--std-padding);
+    margin: 0 var(--std-margin);
+}
+
+/* span 不用作着重 */
+em, strong, cite, code {
+    box-shadow: 0 0px 0px 1px rgba(24, 40, 35, 0.06) inset;
+}
+
+img {
+    vertical-align: middle;
+}
+
+button {
+    cursor: pointer;
+    background-color: white;
+
+    &:hover {
+        filter: invert(8%);
+        transition: filter 0.2s ease-in;
+    }
+
+    &:active {
+        filter: invert(16%);
+        transition: filter 0.1s ease-out;
+    }
+
+    &:disabled {
+        filter: none;
+        cursor: not-allowed;
+    }
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+
+    th, td {
+        padding: 0 var(--std-padding);
+        // border-right: 1px solid rgba(#ebeef5, 0.3);
+    }
+
+    tr {
+        border-bottom: 1px solid #ebeef5;
+
+        &:nth-child(2) {
+            background-color: rgba(#f9f9f9, 0.6);
+        }
+    }
+}
+
+input[type=radio] {
+    box-shadow: none;
+
+    &::before {
+        content: '';
+        cursor: pointer;
+        vertical-align: middle;
+        display: inline-block;
+        height: 1em;
+        width: 1em;
+        transition-duration: var(--std-animation-duration);
+        transition-timing-function: var(--std-animation-timing-function);
+        border-radius: 0.5em;
+        background-color: lightgray;
+    }
+
+    &:checked::before {
+        background-color: yellowgreen;
+    }
+
+    /* 为悬浮和按下添加细节 */
+    &:hover::before {
+        filter: invert(8%);
+    }
+
+    &:active::before {
+        filter: invert(16%);
+    }
+}
+
+input[type=checkbox] {
+    box-shadow: none;
+
+    &::before {
+        content: '';
+        cursor: pointer;
+        vertical-align: middle;
+        display: inline-block;
+        height: 1em;
+        width: 1em;
+        transition-duration: var(--std-animation-duration);
+        transition-timing-function: var(--std-animation-timing-function);
+        border-radius: 0.3em;
+        background-color: lightgray;
+    }
+
+    &:checked::before {
+        background-color: yellowgreen;
+    }
+
+    /* 为悬浮和按下添加细节 */
+    &:hover::before {
+        filter: invert(8%);
+    }
+
+    &:active::before {
+        filter: invert(16%);
+    }
+}
+
+input[type=checkbox] {
+    &.switch {
+        /* 去掉after圆圈的宽度 */
+        margin-right: -0.7em;
+
+        &::before {
+            content: '';
+            cursor: pointer;
+            vertical-align: middle;
+            display: inline-block;
+            height: 1em;
+            width: 1.5em;
+            transition-duration: var(--std-animation-duration);
+            transition-timing-function: var(--std-animation-timing-function);
+            border-radius: 0.5em;
+            background-color: lightgray;
+        }
+
+        $width = 1.1em;
+
+        &::after {
+            content: '';
+            cursor: pointer;
+            vertical-align: middle;
+            display: inline-block;
+            width: $width;
+            height: @width;
+            transition-duration: var(--std-animation-duration);
+            transition-timing-function: var(--std-animation-timing-function);
+            border-radius: (@width / 2);
+            background-color: gray;
+            transform: translateX(-(1.5em + @width) / 2 - (1.5em - @width) / 2 + (1em - @width) / 2);
+        }
+
+        &:checked::after {
+            background-color: yellowgreen;
+            transform: translateX(-(1.5em + $width) / 2 + (1.5em - $width) / 2 - (1em - $width) / 2);
+        }
+
+        /* 为悬浮和按下添加细节 */
+        &:hover::before {
+            filter: invert(8%);
+        }
+
+        &:active::before {
+            filter: invert(16%);
+        }
+
+        &:hover::after {
+            filter: invert(8%);
+        }
+
+        &:active::after {
+            filter: invert(16%);
+        }
+    }
+}
+
+.dropdown {
+    overflow: hidden;
+
+    &>* {
+        /* use the same name with animate.css */
+        animation-name: fadeInDown;
+        animation-duration: var(--std-animation-duration);
+        animation-timing-function: ease-out;
+    }
+}
+
+/* use the same name with animate.css */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
