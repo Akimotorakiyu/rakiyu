@@ -17,11 +17,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
-  <button @click="count++">count is: {{ count }}</button>
-  <Card></Card>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
+  <div class="card">card</div>
 </template>
+
+<style lang="stylus" scoped>
+.card {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--std-border-radius);
+  box-shadow: var(--std-card-shadow);
+}
+</style>
