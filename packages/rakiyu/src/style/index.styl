@@ -49,7 +49,7 @@ a {
     --std-line-height: 2.6;
     --std-inline-line-height: 1.8;
     --std-margin: 0.3em;
-    --std-padding: 0.6em ;
+    --std-padding: 0.6em;
     --std-border-radius: 0.4em;
     --std-animation-duration: 0.2s;
     --std-animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
@@ -86,7 +86,7 @@ select, option, button {
  *  input有的元素为content-box有的为border-box，我本身就不喜欢border，所以直接让border为none
  *  对于img  textarea 块级元素
  */
-input, button, textarea, select, option, label, code {
+input, button, textarea, select, option, label, code, pre {
     border: none;
     border-radius: var(--std-border-radius);
     font-size: inherit;
@@ -101,6 +101,10 @@ input, button, textarea, select, option {
 
 input {
     font-family: inherit;
+}
+
+code, pre {
+    font-family: Consolas, 'Courier New', monospace;
 }
 
 /* i 作为内容使用的为多，不当作行内容器 */
