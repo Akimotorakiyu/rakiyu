@@ -10,6 +10,8 @@ import TableRow from "./components/Table/TableRow.vue";
 
 import { registerComponent } from "./components/index";
 
+import i18n from "./i18n";
+
 const app = createApp(App);
 app.use(router);
 app.use(store);
@@ -17,5 +19,6 @@ app.component("MyTable", MyTable);
 app.component("TableRow", TableRow);
 
 app.use(registerComponent);
+app.use(i18n);
 
 app.mount("#app");
