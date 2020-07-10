@@ -1,11 +1,6 @@
 {
   "name": "rakiyu",
-  "version": "0.4.0",
-  "productName": "鱼叉",
-  "appId": "longyi.harpoon",
-  "private": true,
-  "main": "dist/backend.js",
-  "icon": "public/icon.ico",
+  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
