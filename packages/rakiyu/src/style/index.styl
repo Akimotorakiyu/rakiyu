@@ -54,7 +54,8 @@ a {
     --std-animation-duration: 0.2s;
     --std-animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
     --std-card-shadow: 0 0 1.6em 0px rgba(24, 40, 35, 0.06) inset, 0 0 0.2em 0 rgba(24, 40, 35, 0.16);
-    --std-box-shadow-lite: 0 0 0.8em 0px rgba(24, 40, 35, 0.06) inset, 0 0 0.2em 0 rgba(24, 40, 35, 0.16);
+    --std-card-shadow-lite: 0 0 0.8em 0px rgba(24, 40, 35, 0.06) inset, 0 0 0.2em 0 rgba(24, 40, 35, 0.16);
+    --std-card-shadow-line: 0 0px 0px 1px rgba(24, 40, 35, 0.06) inset;
 }
 
 html {
@@ -94,7 +95,7 @@ input, button, textarea, select, option, label, code, pre {
 }
 
 input, button, textarea, select, option {
-    box-shadow: 0 0px 0px 1px rgba(24, 40, 35, 0.06) inset;
+    box-shadow: var(--std-card-shadow-line);
     padding: 0 var(--std-padding);
     margin: 0 var(--std-margin);
 }
@@ -115,7 +116,7 @@ a, em, strong, cite, code, span {
 
 /* span 不用作着重 */
 em, strong, cite, code {
-    box-shadow: 0 0px 0px 1px rgba(24, 40, 35, 0.06) inset;
+    box-shadow: var(--std-card-shadow-line);
 }
 
 img {
@@ -134,7 +135,7 @@ a {
 button {
     cursor: pointer;
     background-color: transparent;
-    box-shadow: var(--std-box-shadow-lite);
+    box-shadow: var(--std-card-shadow-line);
 
     &:hover {
         filter: invert(8%);
