@@ -106,17 +106,25 @@ input {
 
 code, pre {
     font-family: Consolas, 'Courier New', monospace;
+    background-color: ghostwhite;
 }
 
-/* i 作为内容使用的为多，不当作行内容器 */
-a, em, strong, cite, code, span {
+code {
+    box-shadow: var(--std-card-shadow-line);
+}
+
+pre {
+    box-shadow: var(--std-card-shadow);
+}
+
+code {
+    display: inline-block;
+    padding: 0 var(--std-padding);
+}
+
+a {
     padding: 0 var(--std-padding);
     margin: 0 var(--std-margin);
-}
-
-/* span 不用作着重 */
-em, strong, cite, code {
-    box-shadow: var(--std-card-shadow-line);
 }
 
 img {

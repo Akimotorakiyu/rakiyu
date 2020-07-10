@@ -20,8 +20,15 @@ export default defineComponent({
   <h1>{{ msg }}</h1>
   <button @click="count++">count is: {{ count }}</button>
   <Card></Card>
+
   <p>
     Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
+    <code>components/HelloWorld.vue</code>
+    to test hot module replacement.
+    <strong>你好啊</strong>
+    <cite>你好啊</cite>
+    <em>你好啊</em>
   </p>
+
+  <pre>11</pre>
 </template>
