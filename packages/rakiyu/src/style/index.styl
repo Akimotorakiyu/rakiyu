@@ -52,7 +52,8 @@ a {
     --std-gray-5: rgb(90, 90, 90);
     --std-gray-6: rgb(110, 110, 110);
     --std-font-size: 1rem;
-    --std-line-height: 2.6;
+    --std-line-height: 2.8;
+    --std-line-height-component: 2;
     --std-line-height-pargaph: 2;
     --std-line-height-inline: 1.6;
     --std-margin: 0.3em;
@@ -129,6 +130,7 @@ input, button, textarea, select, option {
     box-shadow: var(--std-card-shadow-line);
     padding: 0 var(--std-padding);
     margin: 0 var(--std-margin);
+    line-height: var(--std-line-height-component);
 }
 
 input {
@@ -404,6 +406,7 @@ dialog {
     box-shadow: var(--std-card-shadow-line);
     margin: 0 var(--std-margin);
     display: inline-block;
+    line-height: var(--std-line-height-component);
 
     &>* {
         box-shadow: none;

@@ -59,7 +59,15 @@ export default defineComponent({
     <cite>你好啊</cite>
     <em>你好啊</em>
   </p>
-
+  <div>
+    <input type="text" />
+    <input type="checkbox" name id />
+    <input type="radio" name id />
+    <select name="" id="">
+      <option>1</option>
+      <option>2</option>
+    </select>
+  </div>
   <div class="group">
     <button>你好啊</button>
     <button>你好啊</button>
