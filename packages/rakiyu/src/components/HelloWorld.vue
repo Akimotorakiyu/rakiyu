@@ -18,6 +18,12 @@ export default defineComponent({
 
 <template>
   <h1>{{ msg }}</h1>
+  <h2>{{ msg }}</h2>
+  <h3>{{ msg }}</h3>
+  <h4>{{ msg }}</h4>
+  <h5>{{ msg }}</h5>
+  <h6>{{ msg }}</h6>
+
   <button @click="count++">count is: {{ count }}</button>
   <Card></Card>
 
@@ -29,6 +35,13 @@ export default defineComponent({
     <cite>你好啊</cite>
     <em>你好啊</em>
   </p>
+
+  <div class="group">
+    <button>你好啊</button>
+    <button>你好啊</button>
+    <button>你好啊</button>
+    <button>你好啊</button>
+  </div>
 
   <pre>11</pre>
 </template>

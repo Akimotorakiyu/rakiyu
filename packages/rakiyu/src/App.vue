@@ -21,13 +21,7 @@ export default defineComponent({
 
 <style lang="stylus">
 #app {
- 
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
-<style lang="stylus" scoped>
-
-</style>
-
+<style lang="stylus" scoped></style>
