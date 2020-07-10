@@ -34,6 +34,30 @@ export default defineComponent({
     <strong>你好啊</strong>
     <cite>你好啊</cite>
     <em>你好啊</em>
+    Edit
+    <code>components/HelloWorld.vue</code>
+    to test hot module replacement.
+    <strong>你好啊</strong>
+    <cite>你好啊</cite>
+    <em>你好啊</em>
+    Edit
+    <code>components/HelloWorld.vue</code>
+    to test hot module replacement.
+    <strong>你好啊</strong>
+    <cite>你好啊</cite>
+    <em>你好啊</em>
+    Edit
+    <code>components/HelloWorld.vue</code>
+    to test hot module replacement.
+    <strong>你好啊</strong>
+    <cite>你好啊</cite>
+    <em>你好啊</em>
+    Edit
+    <code>components/HelloWorld.vue</code>
+    to test hot module replacement.
+    <strong>你好啊</strong>
+    <cite>你好啊</cite>
+    <em>你好啊</em>
   </p>
 
   <div class="group">

@@ -53,7 +53,8 @@ a {
     --std-gray-6: rgb(110, 110, 110);
     --std-font-size: 1rem;
     --std-line-height: 2.6;
-    --std-inline-line-height: 1.8;
+    --std-line-height-pargaph: 2;
+    --std-line-height-inline: 1.6;
     --std-margin: 0.3em;
     --std-padding: 0.6em;
     --std-border-radius: 0.4em;
@@ -122,7 +123,6 @@ input, button, textarea, select, option, label, code, pre {
     border: none;
     border-radius: var(--std-border-radius);
     font-size: inherit;
-    line-height: var(--std-inline-line-height);
 }
 
 input, button, textarea, select, option {
@@ -135,22 +135,20 @@ input {
     font-family: inherit;
 }
 
+pre, p {
+    line-height: var(--std-line-height-pargaph);
+}
+
 code, pre {
     font-family: Consolas, 'Courier New', monospace;
     background-color: ghostwhite;
-}
-
-code {
     box-shadow: var(--std-card-shadow-line);
-}
-
-pre {
-    box-shadow: var(--std-card-shadow);
 }
 
 code {
     display: inline-block;
     padding: 0 var(--std-padding);
+    line-height: var(--std-line-height-inline);
 }
 
 a {
@@ -404,7 +402,6 @@ dialog {
 .group {
     border-radius: var(--std-border-radius);
     box-shadow: var(--std-card-shadow-line);
-    line-height: var(--std-inline-line-height);
     margin: 0 var(--std-margin);
     display: inline-block;
 
