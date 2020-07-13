@@ -19,10 +19,4 @@ export default defineComponent({
   <router-view></router-view>
 </template>
 
-<style lang="stylus">
-#app {
-  background-image url("./assets/appbg.jpg")
-  background-size cover
-}
-</style>
 <style lang="stylus" scoped></style>
