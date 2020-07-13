@@ -1,0 +1,40 @@
+module.exports = {
+  purge: [],
+  theme: {
+    extend: {},
+    fontFamily: {
+      sans: [
+        "Microsoft YaHei UI",
+        "Microsoft YaHei",
+        "system-ui",
+        "-apple-system",
+        "BlinkMacSystemFont",
+        '"Segoe UI"',
+        "Roboto",
+        '"Helvetica Neue"',
+        "Arial",
+        '"Noto Sans"',
+        "sans-serif",
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+        '"Noto Color Emoji"',
+        "emoji",
+        "math",
+        // old win7
+        "fangsong",
+      ],
+      serif: ["Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
+      mono: [
+        "Menlo",
+        "Monaco",
+        "Consolas",
+        '"Liberation Mono"',
+        '"Courier New"',
+        "monospace",
+      ],
+    },
+  },
+  variants: {},
+  plugins: [],
+};
