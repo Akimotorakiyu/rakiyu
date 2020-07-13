@@ -22,6 +22,8 @@ export default defineComponent({
 <style lang="stylus">
 #app {
   text-align: center;
+  background-image url("./assets/appbg.jpg")
+  background-size cover
 }
 </style>
 <style lang="stylus" scoped></style>

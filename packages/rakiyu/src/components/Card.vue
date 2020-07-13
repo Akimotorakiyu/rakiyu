@@ -26,5 +26,7 @@ export default defineComponent({
   height: 100px;
   border-radius: var(--std-border-radius);
   box-shadow: var(--std-card-shadow);
+  backdrop-filter: var(--std-card-froested-glass);
+  background-color: var(--std-gray-transparent-8);
 }
 </style>

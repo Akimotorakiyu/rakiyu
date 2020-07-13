@@ -68,6 +68,11 @@ export default defineComponent({
       <option>2</option>
     </select>
   </div>
+  <textarea>你好世界</textarea>
+  <select>
+    <option>11111</option>
+    <option>11111</option>
+  </select>
   <div class="group">
     <button>你好啊</button>
     <button>你好啊</button>

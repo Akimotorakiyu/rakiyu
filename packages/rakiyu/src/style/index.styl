@@ -54,6 +54,15 @@ a {
     --std-gray-6: rgb(192, 192, 192);
     --std-gray-7: rgb(224, 224, 224);
     --std-gray-8: rgb(255, 255, 255);
+    --std-gray-transparent-0: rgba(0, 0, 0, 0.5);
+    --std-gray-transparent-1: rgba(32, 32, 32, 0.5);
+    --std-gray-transparent-2: rgba(64, 64, 64, 0.5);
+    --std-gray-transparent-3: rgba(96, 96, 96, 0.5);
+    --std-gray-transparent-4: rgba(128, 128, 128, 0.5);
+    --std-gray-transparent-5: rgba(160, 160, 160, 0.5);
+    --std-gray-transparent-6: rgba(192, 192, 192, 0.5);
+    --std-gray-transparent-7: rgba(224, 224, 224, 0.5);
+    --std-gray-transparent-8: rgba(255, 255, 255, 0.5);
     --std-font-size: 1rem;
     --std-line-height: 2.8;
     --std-line-height-component: 2;
@@ -66,9 +75,10 @@ a {
     --std-border-radius: 0.4em;
     --std-animation-duration: 0.2s;
     --std-animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    --std-card-froested-glass: blur(1em);
     --std-card-shadow: 0 0 1.6em 0px rgba(24, 40, 35, 0.06) inset, 0 0 0.2em 0 rgba(24, 40, 35, 0.16);
     --std-card-shadow-lite: 0 0 0.8em 0px rgba(24, 40, 35, 0.06) inset, 0 0 0.2em 0 rgba(24, 40, 35, 0.16);
-    --std-card-shadow-line: 0 0px 0px 1px rgba(24, 40, 35, 0.06) inset;
+    --std-card-shadow-line: 0 0px 0px 1px rgba(24, 40, 35, 0.06) inset,0 0px 0px 1px rgba(233, 233, 233, 0.1) inset;
 }
 
 html {
@@ -141,6 +151,8 @@ input, button, textarea, select, option {
     padding: 0 var(--std-padding);
     margin: 0 var(--std-margin);
     line-height: var(--std-line-height-component);
+    background-color: transparent;
+    backdrop-filter: var(--std-card-froested-glass);
 }
 
 input {
@@ -153,7 +165,8 @@ pre, p {
 
 code, pre {
     font-family: Consolas, 'Courier New', monospace;
-    background-color: ghostwhite;
+    background-color: var(--std-gray-transparent-7);
+    backdrop-filter: var(--std-card-froested-glass);
     box-shadow: var(--std-card-shadow-line);
 }
 
@@ -164,8 +177,10 @@ code {
 }
 
 a {
+    color: cornflowerblue;
     padding: 0 var(--std-padding);
     margin: 0 var(--std-margin);
+    backdrop-filter: var(--std-card-froested-glass);
 }
 
 img {
@@ -177,13 +192,10 @@ label {
     text-align: right;
 }
 
-a {
-    color: cornflowerblue;
-}
-
 button {
     cursor: pointer;
     background-color: transparent;
+    backdrop-filter: var(--std-card-froested-glass);
     box-shadow: var(--std-card-shadow-line);
 
     &:hover {
@@ -213,9 +225,10 @@ table {
 
     tr {
         border-bottom: 1px solid #ebeef5;
+        background-color: var(--std-gray-transparent-8);
 
         &:nth-child(2) {
-            background-color: rgba(#f9f9f9, 0.6);
+            background-color: var(--std-gray-transparent-7);
         }
     }
 }
@@ -384,7 +397,7 @@ dialog {
         align-items: center;
         width: 100%;
         height: 100%;
-        background-color: rgba(#1b1b1b, 0.5);
+        backdrop-filter: var(--std-card-froested-glass);
         animation-name: fadeIn;
         animation-duration: var(--std-animation-duration);
         animation-timing-function: ease-out;
@@ -411,12 +424,17 @@ dialog {
     }
 }
 
+.froested-glass {
+    backdrop-filter: var(--std-card-froested-glass);
+}
+
 .group {
     border-radius: var(--std-border-radius);
     box-shadow: var(--std-card-shadow-line);
     margin: 0 var(--std-margin);
     display: inline-block;
     line-height: var(--std-line-height-component);
+    background-color: var(--std-gray-transparent-7);
 
     &>* {
         box-shadow: none;
