@@ -42,8 +42,17 @@ a {
     }
 }
 
+/* 使用继承值 */
+input, button, textarea, select, option, label, code, pre {
+    font-size: inherit;
+}
+
+input {
+    font-family: inherit;
+}
+
 /**
- * 清理部分原生样式装饰
+ * 变量
  */
 :root {
     --std-gray-0: rgb(0, 0, 0);
@@ -55,15 +64,6 @@ a {
     --std-gray-6: rgb(192, 192, 192);
     --std-gray-7: rgb(224, 224, 224);
     --std-gray-8: rgb(255, 255, 255);
-    --std-gray-transparent-0: rgba(0, 0, 0, 0.5);
-    --std-gray-transparent-1: rgba(32, 32, 32, 0.5);
-    --std-gray-transparent-2: rgba(64, 64, 64, 0.5);
-    --std-gray-transparent-3: rgba(96, 96, 96, 0.5);
-    --std-gray-transparent-4: rgba(128, 128, 128, 0.5);
-    --std-gray-transparent-5: rgba(160, 160, 160, 0.5);
-    --std-gray-transparent-6: rgba(192, 192, 192, 0.5);
-    --std-gray-transparent-7: rgba(224, 224, 224, 0.5);
-    --std-gray-transparent-8: rgba(255, 255, 255, 0.5);
     --std-font-size: 1rem;
     --std-line-height: 2.8;
     --std-line-height-component: 2;
@@ -136,7 +136,6 @@ select, option, button {
 input, button, textarea, select, option, label, code, pre {
     border: none;
     border-radius: var(--std-border-radius);
-    font-size: inherit;
 }
 
 input, button, textarea, select, option {
@@ -144,10 +143,6 @@ input, button, textarea, select, option {
     padding: 0 var(--std-padding);
     margin: 0 var(--std-margin);
     line-height: var(--std-line-height-component);
-}
-
-input {
-    font-family: inherit;
 }
 
 pre, p {
