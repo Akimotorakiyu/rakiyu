@@ -67,7 +67,8 @@ input {
     --std-border-radius: 0.4em;
     --std-animation-duration: 0.2s;
     --std-animation-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    --std-card-froested-glass: blur(1em);
+    --std-card-froested-glass: brightness(1.2) blur(100px);
+    --std-bg-color: rgba(241, 245, 248, 0.4);
     --std-card-shadow: 0 0 1.6em 0px rgba(24, 40, 35, 0.06) inset, 0 0 0.2em 0 rgba(24, 40, 35, 0.16);
     --std-card-shadow-lite: 0 0 0.8em 0px rgba(24, 40, 35, 0.06) inset, 0 0 0.2em 0 rgba(24, 40, 35, 0.16);
     --std-card-shadow-line: 0 0px 0px 1px rgba(24, 40, 35, 0.06) inset, 0 0px 0px 1px rgba(233, 233, 233, 0.1) inset;
@@ -79,6 +80,7 @@ html {
     font-family: 'Microsoft YaHei UI', 'Microsoft YaHei', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', emoji, math, fangsong;
     font-size: 14px;
     line-height: var(--std-line-height);
+    background-color: var(--std-bg-color);
 }
 
 h1, h2, h3, h4, h5, h6, p, pre, table {

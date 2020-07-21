@@ -17,13 +17,13 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="card">card</div>
+  <div class="card" contenteditable>card</div>
 </template>
 
 <style lang="stylus" scoped>
 .card {
-  width: 100px;
-  height: 100px;
+  margin: var(--std-margin);
+  margin: var(--std-padding);
   border-radius: var(--std-border-radius);
   box-shadow: var(--std-card-shadow);
   backdrop-filter: var(--std-card-froested-glass);
