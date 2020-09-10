@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import store from "./store";
 
 export default defineComponent({
   setup(props) {},
@@ -8,5 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <h1>hello world</h1>
+  <div>
+    <header>111</header>
+  </div>
 </template>

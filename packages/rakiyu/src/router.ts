@@ -1,20 +1,32 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Home from "./Home.vue";
-import About from "./About.vue";
+import Common1 from "./views/Common1/Index.vue";
+import Home from "./views/Common1/Home.vue";
+import Header from "./views/Common1/Header.vue";
+
+import About from "./views/Common1/About.vue";
 import HelloWorld from "./components/HelloWorld.vue";
 
 const routes: RouteRecordRaw[] = [
   {
     path: "",
-    component: Home,
-  },
-  {
-    path: "/About",
-    component: About,
+    component: Common1,
     children: [
       {
         path: "",
-        component: HelloWorld,
+        components: {
+          default: Home,
+          header: Header,
+        },
+      },
+      {
+        path: "/About",
+        component: About,
+        children: [
+          {
+            path: "",
+            component: HelloWorld,
+          },
+        ],
       },
     ],
   },
