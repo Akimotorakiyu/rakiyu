@@ -6,13 +6,23 @@ import {
   reactive,
   Component,
   provide,
+  ref,
 } from "vue";
-import DocNode from "./DocNode.vue";
+import TextNode from "./TextNode.vue";
 import { EditorEventHub } from "./eventHub";
 export default defineComponent({
   components: {
-    DocNode,
+    TextNode,
   },
+  props: {
+    doc: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
+
   setup(props) {
     let instance = undefined;
 
@@ -33,31 +43,14 @@ export default defineComponent({
         new Event(currentSelectrion.focusNode.parentElement.id)
       );
     }
-    const docs = reactive([
-      {
-        type: "TextNode",
-        doc: "hello world",
-      },
-      {
-        type: "TextNode",
-        doc: "测试",
-      },
-    ]);
+
     return {
-      docs,
-      status: reactive({}),
-      methods: {
-        dealInput,
-      },
+      com: ref("TextNode"),
     };
   },
 });
 </script>
 
 <template>
-  <div contenteditable @input="methods.dealInput">
-    <template v-for="(item, index) in docs" :key="index">
-      <DocNode :doc="item"></DocNode>
-    </template>
-  </div>
+  <component :is="com" :doc="doc"></component>
 </template>
