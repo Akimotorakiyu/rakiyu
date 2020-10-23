@@ -1,8 +1,19 @@
 <script lang="ts">
-import { defineComponent } from "vue";
-
+import { defineComponent, reactive } from "vue";
+import Editor from "./editor/Index.vue";
 export default defineComponent({
-  setup(props) {},
+  components: {
+    Editor,
+  },
+  setup(props) {
+    return {
+      doc: reactive({
+        data: {
+          p: "string",
+        },
+      }),
+    };
+  },
 });
 </script>
 
@@ -21,4 +32,5 @@ export default defineComponent({
       <div class="text-gray-600">18817832003</div>
     </div>
   </div>
+  <Editor></Editor>
 </template>
