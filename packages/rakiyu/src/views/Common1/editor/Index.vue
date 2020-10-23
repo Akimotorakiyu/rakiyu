@@ -28,7 +28,7 @@ export default defineComponent({
 
     function dealInput(event: InputEvent) {
       currentSelectrion = getSelection();
-      console.log("index", event, currentSelectrion);
+      console.log("dealInput", event, currentSelectrion);
       editorEventHub.eventTarget.dispatchEvent(
         new Event(currentSelectrion.focusNode.parentElement.id)
       );
@@ -43,11 +43,22 @@ export default defineComponent({
         doc: "测试",
       },
     ]);
+
+    function dealEnter(event: InputEvent) {
+      console.log("dealEnter", event);
+      event.preventDefault();
+      docs.push({
+        type: "TextNode",
+        doc: "added",
+      });
+    }
+
     return {
       docs,
       status: reactive({}),
       methods: {
         dealInput,
+        dealEnter,
       },
     };
   },
@@ -55,7 +66,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <div contenteditable @input="methods.dealInput">
+  <div
+    contenteditable
+    @input="methods.dealInput"
+    @keydown.enter="methods.dealEnter"
+  >
     <template v-for="(item, index) in docs" :key="index">
       <DocNode :doc="item"></DocNode>
     </template>
