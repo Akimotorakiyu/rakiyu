@@ -9,6 +9,7 @@ import {
 } from "vue";
 import DocNode from "./DocNode.vue";
 import { EditorEventHub } from "./eventHub";
+import { ContainerNode, EndNode } from "./types";
 export default defineComponent({
   components: {
     DocNode,
@@ -33,14 +34,23 @@ export default defineComponent({
         new Event(currentSelectrion.focusNode.parentElement.id)
       );
     }
-    const docs = reactive([
+    const docs = reactive<(ContainerNode | EndNode)[]>([
       {
-        type: "TextNode",
-        doc: "hello world",
+        tag: "DivNode",
+        children: [
+          {
+            tag: "TextNode",
+            data: "HelloWorld",
+          },
+        ],
       },
       {
-        type: "TextNode",
-        doc: "测试",
+        tag: "TextNode",
+        data: "测试",
+      },
+      {
+        tag: "TextNode",
+        data: "测试2",
       },
     ]);
 
@@ -48,8 +58,8 @@ export default defineComponent({
       console.log("dealEnter", event);
       event.preventDefault();
       docs.push({
-        type: "TextNode",
-        doc: "added",
+        tag: "TextNode",
+        data: "added",
       });
     }
 

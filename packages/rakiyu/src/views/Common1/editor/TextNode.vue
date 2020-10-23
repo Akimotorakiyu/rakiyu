@@ -66,5 +66,5 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :id="id" ref="nodeElement" :key="id">{{ doc.doc }}</div>
+  <span :id="id" ref="nodeElement" :key="id">{{ doc.data }}</span>
 </template>
