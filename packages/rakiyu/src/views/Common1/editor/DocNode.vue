@@ -32,17 +32,6 @@ export default defineComponent({
 
     let block: Component;
     let currentSelectrion = reactive<Selection>(null);
-    const editorEventHub = new EditorEventHub();
-
-    provide("editorEventHub", editorEventHub);
-
-    function dealInput(event: InputEvent) {
-      currentSelectrion = getSelection();
-      console.log("index", event, currentSelectrion);
-      editorEventHub.eventTarget.dispatchEvent(
-        new Event(currentSelectrion.focusNode.parentElement.id)
-      );
-    }
 
     return {
       com: ref("TextNode"),

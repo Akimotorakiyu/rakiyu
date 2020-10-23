@@ -12,7 +12,7 @@ import {
 } from "vue";
 import { nanoid } from "nanoid";
 import { EditorEventHub } from "./eventHub";
-
+import { EndNode } from "./types";
 export default defineComponent({
   props: {
     doc: {
@@ -22,10 +22,11 @@ export default defineComponent({
       },
     },
   },
-  setup(props) {
+  setup(props: { doc: EndNode }) {
     let instance: ComponentInternalInstance;
+
     const id = ref(nanoid());
-    const doc = ref("hello world!");
+
     let nodeElement: HTMLElement;
 
     const editorEventHub = inject<EditorEventHub>("editorEventHub");
@@ -42,7 +43,8 @@ export default defineComponent({
         nodeElement,
         nodeElement.textContent
       );
-      doc.value = nodeElement.textContent;
+
+      props.doc.data = nodeElement.textContent;
     });
 
     EventTarget;

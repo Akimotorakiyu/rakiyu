@@ -29,7 +29,12 @@ export default defineComponent({
 
     function dealInput(event: InputEvent) {
       currentSelectrion = getSelection();
-      console.log("dealInput", event, currentSelectrion);
+      console.log(
+        "dealInput",
+        event,
+        currentSelectrion,
+        currentSelectrion.focusNode.parentElement.id
+      );
       editorEventHub.eventTarget.dispatchEvent(
         new Event(currentSelectrion.focusNode.parentElement.id)
       );
