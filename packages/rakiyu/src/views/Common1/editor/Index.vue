@@ -94,7 +94,7 @@ export default defineComponent({
 <template>
   <div
     contenteditable
-    class="bg-gray-300 p-4 rounded-2xl"
+    class="bg-gray-300 p-4 m-4 rounded-2xl"
     @input="methods.dealInput"
     @keydown.enter="methods.dealEnter"
   >
