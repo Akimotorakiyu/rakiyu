@@ -12,7 +12,7 @@ import {
   defineAsyncComponent,
 } from "vue";
 import { nanoid } from "nanoid";
-import { EditorEventHub } from "./eventHub";
+import { EditorHub } from "./eventHub";
 import { EndNode } from "./types";
 
 export default defineComponent({
@@ -32,7 +32,7 @@ export default defineComponent({
 
     let nodeElement: HTMLElement;
 
-    const editorEventHub = inject<EditorEventHub>("editorEventHub");
+    const editorEventHub = inject<EditorHub>("editorHub");
 
     onUpdated(() => {
       console.log("更新");

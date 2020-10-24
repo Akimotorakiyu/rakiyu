@@ -1,3 +1,3 @@
-export class EditorEventHub {
+export class EditorHub {
   eventTarget = new EventTarget();
 }

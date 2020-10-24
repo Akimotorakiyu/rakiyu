@@ -8,7 +8,7 @@ import {
   provide,
 } from "vue";
 import DocNode from "./DocNode.vue";
-import { EditorEventHub } from "./eventHub";
+import { EditorHub } from "./eventHub";
 import { ContainerNode, EndNode } from "./types";
 export default defineComponent({
   components: {
@@ -23,9 +23,9 @@ export default defineComponent({
 
     let block: Component;
     let currentSelectrion = reactive<Selection>(null);
-    const editorEventHub = new EditorEventHub();
+    const editorHub = new EditorHub();
 
-    provide("editorEventHub", editorEventHub);
+    provide("editorHub", editorHub);
 
     function dealInput(event: InputEvent) {
       currentSelectrion = getSelection();
@@ -35,7 +35,7 @@ export default defineComponent({
         currentSelectrion,
         currentSelectrion.focusNode.parentElement.id
       );
-      editorEventHub.eventTarget.dispatchEvent(
+      editorHub.eventTarget.dispatchEvent(
         new Event(currentSelectrion.focusNode.parentElement.id)
       );
     }
