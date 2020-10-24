@@ -91,4 +91,6 @@ export default defineComponent({
       <DocNode :doc="item"></DocNode>
     </template>
   </div>
+
+  {{ docs }}
 </template>
