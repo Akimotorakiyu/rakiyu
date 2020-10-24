@@ -24,6 +24,11 @@ export default defineComponent({
     let block: Component;
     let currentSelectrion = reactive<Selection>(null);
     const editorHub = new EditorHub();
+    const nodeMap = new Map<string, EndNode>();
+    editorHub.eventLite.onLite("register-node", (id: string, data: EndNode) => {
+      console.log("register-node", id, data);
+      nodeMap.set(id, data);
+    });
 
     provide("editorHub", editorHub);
 
@@ -33,12 +38,17 @@ export default defineComponent({
         "dealInput",
         event,
         currentSelectrion,
-        currentSelectrion.focusNode.parentElement.id
-      );
-      editorHub.eventLite.emit(
         currentSelectrion.focusNode.parentElement.id,
-        new Event(currentSelectrion.focusNode.parentElement.id)
+        nodeMap
       );
+      // editorHub.eventLite.emit(
+      //   currentSelectrion.focusNode.parentElement.id,
+      //   new Event(currentSelectrion.focusNode.parentElement.id)
+      // );
+
+      const node = nodeMap.get(currentSelectrion.focusNode.parentElement.id);
+      console.log(node);
+      node.data = currentSelectrion.focusNode.textContent;
     }
     const docs = reactive<(ContainerNode | EndNode)[]>([
       {

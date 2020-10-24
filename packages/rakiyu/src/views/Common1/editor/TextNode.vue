@@ -31,23 +31,8 @@ export default defineComponent({
 
     const editorEventHub = inject<EditorHub>("editorHub");
 
-    onUpdated(() => {
-      console.log("更新");
-      nodeElement = instance.refs?.nodeElement as HTMLElement;
-    });
-    editorEventHub.eventLite.onLite(id.value, (event) => {
-      console.log(
-        "recive event",
-        event,
-        instance,
-        nodeElement,
-        nodeElement.textContent
-      );
+    editorEventHub.eventLite.emit("register-node", id.value, props.doc);
 
-      props.doc.data = nodeElement.textContent;
-    });
-
-    EventTarget;
     onMounted(() => {
       instance = getCurrentInstance();
       nodeElement = instance.refs?.nodeElement as HTMLElement;
