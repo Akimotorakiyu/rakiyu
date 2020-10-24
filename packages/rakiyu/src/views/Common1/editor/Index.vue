@@ -6,6 +6,8 @@ import {
   reactive,
   Component,
   provide,
+  ComponentInternalInstance,
+  nextTick,
 } from "vue";
 import DocNode from "./DocNode.vue";
 import { EditorHub } from "./eventHub";
@@ -15,10 +17,12 @@ export default defineComponent({
     DocNode,
   },
   setup(props) {
-    let instance = undefined;
+    let instance: ComponentInternalInstance;
+    let nodeElement: HTMLElement;
 
     onMounted(() => {
       instance = getCurrentInstance();
+      nodeElement = instance.refs?.nodeElement as HTMLElement;
     });
 
     let block: Component;
@@ -34,17 +38,24 @@ export default defineComponent({
 
     function dealInput(event: InputEvent) {
       currentSelectrion = getSelection();
-      console.log(
-        "dealInput",
-        event,
-        currentSelectrion,
-        currentSelectrion.focusNode.parentElement.id,
-        nodeMap
-      );
+      const lastestRange = currentSelectrion.getRangeAt(0);
+      const startOffset = lastestRange.startOffset;
+      const parentElement = currentSelectrion.anchorNode.parentElement;
+
+      console.log("dealInput", nodeMap);
 
       const node = nodeMap.get(currentSelectrion.focusNode.parentElement.id);
       console.log(node);
       node.data = currentSelectrion.focusNode.textContent;
+
+      nextTick(() => {
+        const range = new Range();
+        console.log("parentElement", parentElement.firstChild);
+        range.setStart(parentElement.firstChild, startOffset);
+
+        currentSelectrion.removeAllRanges();
+        currentSelectrion.addRange(range);
+      });
     }
     const docs = reactive<(ContainerNode | EndNode)[]>([
       {
@@ -67,12 +78,20 @@ export default defineComponent({
     ]);
 
     function dealEnter(event: InputEvent) {
-      console.log("dealEnter", event);
+      // todo
+
+      console.log("wip: dealEnter", event);
       event.preventDefault();
       docs.push({
         tag: "TextNode",
         data: "added",
       });
+    }
+
+    function dealDelete(event: InputEvent) {
+      // todo
+      console.log("wip: dealDelete", event);
+      event.preventDefault();
     }
 
     return {
@@ -89,10 +108,12 @@ export default defineComponent({
 
 <template>
   <div
+    ref="nodeElement"
     contenteditable
     class="bg-gray-300 p-4 m-4 rounded-2xl"
     @input="methods.dealInput"
     @keydown.enter="methods.dealEnter"
+    @keydown.delete="methods.dealDelete"
   >
     <template v-for="(item, index) in docs" :key="index">
       <DocNode :doc="item"></DocNode>
