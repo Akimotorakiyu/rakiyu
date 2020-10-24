@@ -41,10 +41,6 @@ export default defineComponent({
         currentSelectrion.focusNode.parentElement.id,
         nodeMap
       );
-      // editorHub.eventLite.emit(
-      //   currentSelectrion.focusNode.parentElement.id,
-      //   new Event(currentSelectrion.focusNode.parentElement.id)
-      // );
 
       const node = nodeMap.get(currentSelectrion.focusNode.parentElement.id);
       console.log(node);
