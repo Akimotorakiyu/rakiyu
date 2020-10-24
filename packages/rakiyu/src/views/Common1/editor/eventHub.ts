@@ -1,3 +1,5 @@
+import { EventLite } from "./EventLite";
+
 export class EditorHub {
-  eventTarget = new EventTarget();
+  eventLite = new EventLite();
 }

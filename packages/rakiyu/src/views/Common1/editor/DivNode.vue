@@ -38,7 +38,7 @@ export default defineComponent({
       console.log("更新");
       nodeElement = instance.refs?.nodeElement as HTMLElement;
     });
-    editorEventHub.eventTarget.addEventListener(id.value, (event) => {
+    editorEventHub.eventLite.onLite(id.value, (event) => {
       console.log(
         "recive event",
         event,

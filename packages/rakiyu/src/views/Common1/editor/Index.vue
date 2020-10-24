@@ -35,7 +35,8 @@ export default defineComponent({
         currentSelectrion,
         currentSelectrion.focusNode.parentElement.id
       );
-      editorHub.eventTarget.dispatchEvent(
+      editorHub.eventLite.emit(
+        currentSelectrion.focusNode.parentElement.id,
         new Event(currentSelectrion.focusNode.parentElement.id)
       );
     }
