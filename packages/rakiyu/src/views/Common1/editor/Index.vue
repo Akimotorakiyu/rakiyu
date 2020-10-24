@@ -91,7 +91,8 @@ export default defineComponent({
     function dealDelete(event: InputEvent) {
       // todo
       console.log("wip: dealDelete", event);
-      event.preventDefault();
+
+      // event.preventDefault();
     }
 
     return {
@@ -100,6 +101,7 @@ export default defineComponent({
       methods: {
         dealInput,
         dealEnter,
+        dealDelete,
       },
     };
   },
