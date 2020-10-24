@@ -9,11 +9,15 @@ import {
   ref,
 } from "vue";
 import TextNode from "./TextNode.vue";
+import DivNode from "./DivNode.vue";
+
 import { EditorEventHub } from "./eventHub";
 export default defineComponent({
   components: {
     TextNode,
+    DivNode,
   },
+
   props: {
     doc: {
       type: Object,
@@ -34,12 +38,12 @@ export default defineComponent({
     let currentSelectrion = reactive<Selection>(null);
 
     return {
-      com: ref("TextNode"),
+      com: ref("DivNode"),
     };
   },
 });
 </script>
 
 <template>
-  <component :is="com" :doc="doc"></component>
+  <component :is="doc.tag" :doc="doc"></component>
 </template>
