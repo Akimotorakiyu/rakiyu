@@ -12,7 +12,7 @@ import {
 } from "vue";
 import { nanoid } from "nanoid";
 import { EditorHub } from "./eventHub";
-import { EndNode } from "./types";
+import { EndNode, ContainerNode } from "./types";
 export default defineComponent({
   props: {
     doc: {
@@ -21,8 +21,14 @@ export default defineComponent({
         return {};
       },
     },
+    parent: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
-  setup(props: { doc: EndNode }) {
+  setup(props: { doc: EndNode; parent: ContainerNode }) {
     let instance: ComponentInternalInstance;
 
     const id = ref(nanoid());

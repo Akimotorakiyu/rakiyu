@@ -10,13 +10,11 @@ import {
   nextTick,
   ref,
 } from "vue";
-import DocNode from "./DocNode.vue";
 import { EditorHub } from "./eventHub";
 import { ContainerNode, EndNode } from "./types";
+
 export default defineComponent({
-  components: {
-    DocNode,
-  },
+  components: {},
   setup(props) {
     let instance: ComponentInternalInstance;
     let nodeElement: HTMLElement;
@@ -30,11 +28,14 @@ export default defineComponent({
     let currentRange: Range;
 
     const editorHub = new EditorHub();
-    const nodeMap = new Map<string, EndNode>();
-    editorHub.eventLite.onLite("register-node", (id: string, data: EndNode) => {
-      console.log("register-node", id, data);
-      nodeMap.set(id, data);
-    });
+    const nodeMap = new Map<string, { doc: EndNode; parent: ContainerNode }>();
+    editorHub.eventLite.onLite(
+      "register-node",
+      (id: string, data: { doc: EndNode; parent: ContainerNode }) => {
+        console.log("register-node", id, data);
+        nodeMap.set(id, data);
+      }
+    );
 
     function updateCurrent() {
       currentSelectrion = getSelection();
@@ -56,7 +57,8 @@ export default defineComponent({
       const startOffset = currentRange.startOffset;
       const parentElement = currentSelectrion.anchorNode.parentElement;
 
-      const node = nodeMap.get(currentSelectrion.focusNode.parentElement.id);
+      const node = nodeMap.get(currentSelectrion.focusNode.parentElement.id)
+        .doc;
       node.data = currentSelectrion.focusNode.textContent;
 
       nextTick(() => {
@@ -69,38 +71,53 @@ export default defineComponent({
         currentRange = range;
       });
     }
-    const docs = reactive<(ContainerNode | EndNode)[]>([
-      {
-        tag: "DivNode",
-        children: [
-          {
-            tag: "TextNode",
-            data: "HelloWorld",
-          },
-          {
-            tag: "ImgNode",
-            data: "./happy.gif",
-          },
-        ],
-      },
-      {
-        tag: "TextNode",
-        data: "测试",
-      },
-      {
-        tag: "TextNode",
-        data: "测试2",
-      },
-    ]);
+    const docs = reactive<ContainerNode>({
+      tag: "DivNode",
+      children: [
+        {
+          tag: "DivNode",
+          children: [
+            {
+              tag: "TextNode",
+              data: "HelloWorld",
+            },
+            {
+              tag: "ImgNode",
+              data: "./happy.gif",
+            },
+          ],
+        },
+        {
+          tag: "DivNode",
+          children: [
+            {
+              tag: "TextNode",
+              data: "测试",
+            },
+            {
+              tag: "TextNode",
+              data: "测试2",
+            },
+          ],
+        },
+      ],
+    });
 
     function dealEnter(event: InputEvent) {
       // todo
+      const node = nodeMap.get(currentSelectrion.focusNode.parentElement.id);
 
-      console.log("wip: dealEnter", event);
+      console.log("wip: dealEnter", event, node);
       event.preventDefault();
-      docs.push({
+      const temp = node.doc.data;
+
+      node.doc.data = temp.slice(0, currentSelectrion.anchorOffset);
+      const index = node.parent.children.findIndex(
+        (value) => value === node.doc
+      );
+      node.parent.children.splice(index + 1, 0, {
         tag: "TextNode",
-        data: "added",
+        data: temp.slice(currentSelectrion.anchorOffset),
       });
     }
 
@@ -149,8 +166,8 @@ export default defineComponent({
     @keydown.left="methods.updateCurrent"
     @keydown.right="methods.updateCurrent"
   >
-    <template v-for="(item, index) in docs" :key="index">
-      <DocNode :doc="item"></DocNode>
+    <template v-for="(item, index) in docs.children" :key="index">
+      <DocNode :doc="item" :parent="docs"></DocNode>
     </template>
   </div>
 

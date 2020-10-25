@@ -13,10 +13,9 @@ import {
 } from "vue";
 import { nanoid } from "nanoid";
 import { EditorHub } from "./eventHub";
-import { EndNode } from "./types";
-
+import { EndNode, ContainerNode } from "./types";
 export default defineComponent({
-  components: { DocNode: defineAsyncComponent(() => import("./DocNode.vue")) },
+  components: {},
   props: {
     doc: {
       type: Object,
@@ -24,8 +23,14 @@ export default defineComponent({
         return {};
       },
     },
+    parent: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
-  setup(props: { doc: EndNode }) {
+  setup(props: { doc: EndNode; parent: ContainerNode }) {
     let instance: ComponentInternalInstance;
 
     const id = ref(nanoid());
@@ -56,7 +61,7 @@ export default defineComponent({
 <template>
   <div :id="id" ref="nodeElement" :key="id">
     <template v-for="(item, index) in doc.children" :key="index">
-      <DocNode :doc="item"></DocNode>
+      <DocNode :doc="item" :parent="doc"></DocNode>
     </template>
   </div>
 </template>
