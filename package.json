@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "test": "",
-    "dev": "cd packages/rakiyu && yarn dev"
+    "dev": "yarn workspace rakiyu run dev"
   },
   "workspaces": [
     "packages/*"
