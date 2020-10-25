@@ -8,6 +8,7 @@ import {
   provide,
   ComponentInternalInstance,
   nextTick,
+  ref,
 } from "vue";
 import DocNode from "./DocNode.vue";
 import { EditorHub } from "./eventHub";
@@ -25,8 +26,9 @@ export default defineComponent({
       nodeElement = instance.refs?.nodeElement as HTMLElement;
     });
 
-    let block: Component;
-    let currentSelectrion = reactive<Selection>(null);
+    let currentSelectrion: Selection;
+    let currentRange: Range;
+
     const editorHub = new EditorHub();
     const nodeMap = new Map<string, EndNode>();
     editorHub.eventLite.onLite("register-node", (id: string, data: EndNode) => {
@@ -34,27 +36,37 @@ export default defineComponent({
       nodeMap.set(id, data);
     });
 
+    function updateCurrent() {
+      currentSelectrion = getSelection();
+      currentRange = currentSelectrion.getRangeAt(0);
+      console.log(
+        "updateCurrent",
+        currentSelectrion.anchorNode,
+        currentSelectrion.focusNode,
+        currentSelectrion.anchorOffset,
+        currentSelectrion.focusOffset
+      );
+    }
+
     provide("editorHub", editorHub);
 
     function dealInput(event: InputEvent) {
-      currentSelectrion = getSelection();
-      const lastestRange = currentSelectrion.getRangeAt(0);
-      const startOffset = lastestRange.startOffset;
+      updateCurrent();
+
+      const startOffset = currentRange.startOffset;
       const parentElement = currentSelectrion.anchorNode.parentElement;
 
-      console.log("dealInput", nodeMap);
-
       const node = nodeMap.get(currentSelectrion.focusNode.parentElement.id);
-      console.log(node);
       node.data = currentSelectrion.focusNode.textContent;
 
       nextTick(() => {
         const range = new Range();
-        console.log("parentElement", parentElement.firstChild);
         range.setStart(parentElement.firstChild, startOffset);
 
         currentSelectrion.removeAllRanges();
         currentSelectrion.addRange(range);
+
+        currentRange = range;
       });
     }
     const docs = reactive<(ContainerNode | EndNode)[]>([
@@ -95,7 +107,16 @@ export default defineComponent({
     function dealDelete(event: InputEvent) {
       // todo
       console.log("wip: dealDelete", event);
+      updateCurrent();
 
+      // event.preventDefault();
+    }
+
+    function dealClick(event: InputEvent) {
+      // todo
+      console.log("wip: dealClick", event);
+
+      updateCurrent();
       // event.preventDefault();
     }
 
@@ -106,6 +127,8 @@ export default defineComponent({
         dealInput,
         dealEnter,
         dealDelete,
+        dealClick,
+        updateCurrent,
       },
     };
   },
@@ -117,9 +140,14 @@ export default defineComponent({
     ref="nodeElement"
     contenteditable
     class="bg-gray-300 p-4 m-4 rounded-2xl"
+    @click="methods.dealClick"
     @input="methods.dealInput"
     @keydown.enter="methods.dealEnter"
     @keydown.delete="methods.dealDelete"
+    @keydown.up="methods.updateCurrent"
+    @keydown.down="methods.updateCurrent"
+    @keydown.left="methods.updateCurrent"
+    @keydown.right="methods.updateCurrent"
   >
     <template v-for="(item, index) in docs" :key="index">
       <DocNode :doc="item"></DocNode>
