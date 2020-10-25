@@ -10,12 +10,14 @@ import {
 } from "vue";
 import TextNode from "./TextNode.vue";
 import DivNode from "./DivNode.vue";
+import ImgNode from "./ImgNode.vue";
 
-import { EditorEventHub } from "./eventHub";
+import { EditorHub } from "./eventHub";
 export default defineComponent({
   components: {
     TextNode,
     DivNode,
+    ImgNode,
   },
 
   props: {

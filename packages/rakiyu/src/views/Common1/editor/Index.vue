@@ -65,6 +65,10 @@ export default defineComponent({
             tag: "TextNode",
             data: "HelloWorld",
           },
+          {
+            tag: "ImgNode",
+            data: "./happy.gif",
+          },
         ],
       },
       {
