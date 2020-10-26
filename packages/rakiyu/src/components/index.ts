@@ -3,7 +3,6 @@ import DocNode from "../views/Common1/editor/DocNode.vue";
 import { App } from "vue";
 
 function registerComponent(app: App) {
-  app.component("Card", Card);
   app.component("DocNode", DocNode);
 }
 
