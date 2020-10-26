@@ -7,8 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "test": "",
-    "dev": "yarn workspace rakiyu run dev"
+    "serve": "yarn workspace rakiyu run serve"
   },
   "workspaces": [
     "packages/*"
