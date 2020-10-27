@@ -9,7 +9,7 @@
   "dependencies": {
     "nanoid": "^3.1.15",
     "tailwindcss": "^1.4.6",
-    "vue": "^3.0.0-beta.14",
+    "vue": "^3.0.2",
     "vue-i18n": "^9.0.0-alpha.11",
     "vue-router": "^4.0.0-alpha.12",
     "vuex": "^4.0.0-beta.2"
