@@ -13,6 +13,7 @@ import {
 import { nanoid } from "nanoid";
 import { EditorHub } from "./eventHub";
 import { EndNode, ContainerNode } from "./types";
+import { number } from "vue-i18n";
 export default defineComponent({
   props: {
     doc: {
@@ -27,8 +28,14 @@ export default defineComponent({
         return {};
       },
     },
+    index: {
+      type: Number,
+      default() {
+        return 0;
+      },
+    },
   },
-  setup(props: { doc: EndNode; parent: ContainerNode }) {
+  setup(props: { doc: EndNode; parent: ContainerNode; index: number }) {
     let instance: ComponentInternalInstance;
 
     const id = ref(nanoid());
@@ -51,9 +58,48 @@ export default defineComponent({
         currentRange: Range;
       }) => {
         if (nodeElement && currentSelection.containsNode(nodeElement, true)) {
-          console.log("textnodeelement", nodeElement);
+          let {
+            anchorNode,
+            anchorOffset,
+            focusOffset,
+            focusNode,
+          } = currentSelection;
+          // middle
+          console.log("flag", nodeElement, anchorNode, focusNode);
 
-          props.doc.className = (props.doc.className || "") + " bold";
+          if (
+            nodeElement !== anchorNode.parentNode &&
+            nodeElement !== focusNode.parentNode
+          ) {
+            props.doc.className = (props.doc.className || "") + " bold";
+          } else {
+            // start, end
+            if (nodeElement === anchorNode.parentNode) {
+              let right = props.doc.data.slice(anchorOffset);
+              console.log("split right", right);
+
+              props.doc.data = props.doc.data.slice(0, anchorOffset);
+              props.parent.children.splice(props.index + 1, 0, {
+                ...props.doc,
+                data: right,
+                className: (props.doc.className || "") + " bold",
+              });
+            } else if (nodeElement === focusNode.parentNode) {
+              let left = props.doc.data.slice(0, focusOffset);
+
+              props.doc.data = props.doc.data.slice(focusOffset);
+              props.parent.children.splice(
+                props.parent.children.findIndex((o) => props.doc === o),
+                0,
+                {
+                  ...props.doc,
+                  data: left,
+                  className: (props.doc.className || "") + " bold",
+                }
+              );
+            }
+          }
+          console.log("textnodeelement", nodeElement);
         }
       }
     );
@@ -82,7 +128,7 @@ export default defineComponent({
   <span v-if="doc.tag=='TextNode'" :id="id" ref="nodeElement" :key="id"
     :class="doc.className"
   >{{ doc.data }}</span>
-  <span else>Error </span>
+  <span v-else>Error </span>
 </template>
 
 <style lang="stylus">

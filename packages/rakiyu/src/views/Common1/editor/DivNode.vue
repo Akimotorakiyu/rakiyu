@@ -62,7 +62,7 @@ export default defineComponent({
 <template>
   <div :id="id" ref="nodeElement" :key="id">
     <template v-for="(item, index) in doc.children" :key="index">
-      <TextNode :doc="item" :parent="doc"></TextNode>
+      <TextNode :doc="item" :parent="doc" :index="index"></TextNode>
     </template>
   </div>
 </template>

@@ -93,27 +93,33 @@ export default defineComponent({
           children: [
             {
               tag: "TextNode",
-              data: "HelloWorld",
-            },
-            {
-              tag: "ImgNode",
-              data: "./happy.gif",
-            },
-          ],
-        },
-        {
-          tag: "DivNode",
-          children: [
-            {
-              tag: "TextNode",
-              data: "测试",
+              data: "Hello",
+              className: "",
             },
             {
               tag: "TextNode",
-              data: "测试2",
+              data: " World",
+              className: "",
             },
+            // {
+            //   tag: "ImgNode",
+            //   data: "./happy.gif",
+            // },
           ],
         },
+        // {
+        //   tag: "DivNode",
+        //   children: [
+        //     {
+        //       tag: "TextNode",
+        //       data: "测试",
+        //     },
+        //     {
+        //       tag: "TextNode",
+        //       data: "测试2",
+        //     },
+        //   ],
+        // },
       ],
     });
 
