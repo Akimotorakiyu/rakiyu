@@ -101,6 +101,11 @@ export default defineComponent({
               data: " World",
               className: "",
             },
+            {
+              tag: "TextNode",
+              data: " Ilovechina",
+              className: "",
+            },
             // {
             //   tag: "ImgNode",
             //   data: "./happy.gif",
