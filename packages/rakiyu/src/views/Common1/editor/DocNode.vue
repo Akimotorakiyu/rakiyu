@@ -38,13 +38,6 @@ export default defineComponent({
   setup(props: { doc: EndNode; parent: ContainerNode }) {
     let instance = undefined;
 
-    onMounted(() => {
-      instance = getCurrentInstance();
-    });
-
-    let block: Component;
-    let currentSelectrion = reactive<Selection>(null);
-
     return {
       com: ref("DivNode"),
     };

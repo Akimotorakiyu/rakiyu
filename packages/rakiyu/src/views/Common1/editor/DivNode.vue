@@ -14,8 +14,9 @@ import {
 import { nanoid } from "nanoid";
 import { EditorHub } from "./eventHub";
 import { EndNode, ContainerNode } from "./types";
+import TextNode from "./TextNode.vue";
 export default defineComponent({
-  components: {},
+  components: { TextNode },
   props: {
     doc: {
       type: Object,
@@ -61,7 +62,7 @@ export default defineComponent({
 <template>
   <div :id="id" ref="nodeElement" :key="id">
     <template v-for="(item, index) in doc.children" :key="index">
-      <DocNode :doc="item" :parent="doc"></DocNode>
+      <TextNode :doc="item" :parent="doc"></TextNode>
     </template>
   </div>
 </template>

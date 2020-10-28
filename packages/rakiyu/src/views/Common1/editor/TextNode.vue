@@ -41,10 +41,27 @@ export default defineComponent({
       doc: props.doc,
       parent: props.parent,
     });
+    editorEventHub.eventLite.onLite(
+      "bold",
+      ({
+        currentSelection,
+        currentRange,
+      }: {
+        currentSelection: Selection;
+        currentRange: Range;
+      }) => {
+        if (nodeElement && currentSelection.containsNode(nodeElement, true)) {
+          console.log("textnodeelement", nodeElement);
+
+          props.doc.className = (props.doc.className || "") + " bold";
+        }
+      }
+    );
 
     onMounted(() => {
       instance = getCurrentInstance();
       nodeElement = instance.refs?.nodeElement as HTMLElement;
+      console.log("node", nodeElement);
     });
 
     function dealInput(params: Event) {
@@ -62,5 +79,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <span :id="id" ref="nodeElement" :key="id">{{ doc.data }}</span>
+  <span v-if="doc.tag=='TextNode'" :id="id" ref="nodeElement" :key="id"
+    :class="doc.className"
+  >{{ doc.data }}</span>
+  <span else>Error </span>
 </template>
+
+<style lang="stylus">
+.bold {
+  font-weight: bold;
+}
+</style>

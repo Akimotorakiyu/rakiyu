@@ -13,8 +13,17 @@ import {
 import { EditorHub } from "./eventHub";
 import { ContainerNode, EndNode } from "./types";
 
+import TextNode from "./TextNode.vue";
+import DivNode from "./DivNode.vue";
+import ImgNode from "./ImgNode.vue";
+import { EventLite } from "./EventLite";
+
 export default defineComponent({
-  components: {},
+  components: {
+    TextNode,
+    DivNode,
+    ImgNode,
+  },
   setup(props) {
     let instance: ComponentInternalInstance;
     let nodeElement: HTMLElement;
@@ -24,7 +33,7 @@ export default defineComponent({
       nodeElement = instance.refs?.nodeElement as HTMLElement;
     });
 
-    let currentSelectrion: Selection;
+    let currentSelection: Selection;
     let currentRange: Range;
 
     const editorHub = new EditorHub();
@@ -38,35 +47,40 @@ export default defineComponent({
     );
 
     function updateCurrent() {
-      currentSelectrion = getSelection();
-      currentRange = currentSelectrion.getRangeAt(0);
+      currentSelection = getSelection();
+      currentRange = currentSelection.getRangeAt(0);
       console.log(
         "updateCurrent",
-        currentSelectrion.anchorNode,
-        currentSelectrion.focusNode,
-        currentSelectrion.anchorOffset,
-        currentSelectrion.focusOffset
+        currentSelection.anchorNode,
+        currentSelection.focusNode,
+        currentSelection.anchorOffset,
+        currentSelection.focusOffset
       );
+      return {
+        currentSelection,
+        currentRange,
+      };
     }
 
     provide("editorHub", editorHub);
 
     function dealInput(event: InputEvent) {
+      console.log("e", event);
+
       updateCurrent();
 
       const startOffset = currentRange.startOffset;
-      const parentElement = currentSelectrion.anchorNode.parentElement;
+      const parentElement = currentSelection.anchorNode.parentElement;
 
-      const node = nodeMap.get(currentSelectrion.focusNode.parentElement.id)
-        .doc;
-      node.data = currentSelectrion.focusNode.textContent;
+      const node = nodeMap.get(currentSelection.focusNode.parentElement.id).doc;
+      node.data = currentSelection.focusNode.textContent;
 
       nextTick(() => {
         const range = new Range();
         range.setStart(parentElement.firstChild, startOffset);
 
-        currentSelectrion.removeAllRanges();
-        currentSelectrion.addRange(range);
+        currentSelection.removeAllRanges();
+        currentSelection.addRange(range);
 
         currentRange = range;
       });
@@ -105,19 +119,19 @@ export default defineComponent({
 
     function dealEnter(event: InputEvent) {
       // todo
-      const node = nodeMap.get(currentSelectrion.focusNode.parentElement.id);
+      const node = nodeMap.get(currentSelection.focusNode.parentElement.id);
 
       console.log("wip: dealEnter", event, node);
       event.preventDefault();
       const temp = node.doc.data;
 
-      node.doc.data = temp.slice(0, currentSelectrion.anchorOffset);
+      node.doc.data = temp.slice(0, currentSelection.anchorOffset);
       const index = node.parent.children.findIndex(
         (value) => value === node.doc
       );
       node.parent.children.splice(index + 1, 0, {
         tag: "TextNode",
-        data: temp.slice(currentSelectrion.anchorOffset),
+        data: temp.slice(currentSelection.anchorOffset),
       });
     }
 
@@ -136,6 +150,10 @@ export default defineComponent({
       updateCurrent();
       // event.preventDefault();
     }
+    function makeBold() {
+      let sel = updateCurrent();
+      editorHub.eventLite.emit("bold", sel);
+    }
 
     return {
       docs,
@@ -146,6 +164,7 @@ export default defineComponent({
         dealDelete,
         dealClick,
         updateCurrent,
+        makeBold,
       },
     };
   },
@@ -167,9 +186,10 @@ export default defineComponent({
     @keydown.right="methods.updateCurrent"
   >
     <template v-for="(item, index) in docs.children" :key="index">
-      <DocNode :doc="item" :parent="docs"></DocNode>
+      <component :is="item.tag" :doc="item" :parent="parent"></component>
     </template>
   </div>
+  <button @click="methods.makeBold">bold</button>
 
   {{ docs }}
 </template>
