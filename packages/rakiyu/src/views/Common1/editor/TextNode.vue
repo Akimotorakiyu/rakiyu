@@ -42,11 +42,40 @@ export default defineComponent({
     let nodeElement: HTMLElement;
 
     const editorEventHub = inject<EditorHub>("editorHub");
+    const docs = inject<ContainerNode>("docs");
 
     editorEventHub.eventLite.emit("register-node", props.doc.id, {
       doc: props.doc,
       parent: props.parent,
     });
+
+    editorEventHub.eventLite.onLite(
+      "enter",
+      ({
+        currentSelection,
+        currentRange,
+      }: {
+        currentSelection: Selection;
+        currentRange: Range;
+      }) => {
+        if (nodeElement && currentSelection.containsNode(nodeElement, true)) {
+          const rootIndex = docs.children.findIndex((o) => o === props.parent);
+
+          const docIndex = props.parent.children.findIndex(
+            (o) => o === props.parent
+          );
+
+          const nextPart = props.parent.children.slice(docIndex);
+          props.parent.children = props.parent.children.slice(0, docIndex);
+
+          docs.children.splice(rootIndex + 1, 0, {
+            ...props.parent,
+            id: nanoid(),
+            children: nextPart,
+          });
+        }
+      }
+    );
 
     editorEventHub.eventLite.onLite(
       "bold",

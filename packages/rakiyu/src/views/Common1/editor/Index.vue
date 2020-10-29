@@ -135,22 +135,27 @@ export default defineComponent({
       ],
     });
 
+    provide("docs", docs);
+
     function dealEnter(event: InputEvent) {
       // todo
-      const node = nodeMap.get(currentSelection.focusNode.parentElement.id);
+      // const node = nodeMap.get(currentSelection.focusNode.parentElement.id);
 
-      console.log("wip: dealEnter", event, node);
+      // console.log("wip: dealEnter", event, node);
       event.preventDefault();
-      const temp = node.doc.data;
+      // const temp = node.doc.data;
 
-      node.doc.data = temp.slice(0, currentSelection.anchorOffset);
-      const index = node.parent.children.findIndex(
-        (value) => value === node.doc
-      );
-      node.parent.children.splice(index + 1, 0, {
-        tag: "TextNode",
-        data: temp.slice(currentSelection.anchorOffset),
-      });
+      // node.doc.data = temp.slice(0, currentSelection.anchorOffset);
+      // const index = node.parent.children.findIndex(
+      //   (value) => value === node.doc
+      // );
+      // node.parent.children.splice(index + 1, 0, {
+      //   tag: "TextNode",
+      //   data: temp.slice(currentSelection.anchorOffset),
+      // });
+
+      let sel = updateCurrent();
+      editorHub.eventLite.emit("enter", sel);
     }
 
     function dealDelete(event: InputEvent) {
