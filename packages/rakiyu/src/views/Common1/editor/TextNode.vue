@@ -156,8 +156,10 @@ export default defineComponent({
         currentSelection: Selection;
         currentRange: Range;
       }) => {
-        console.log("event header");
-        props.parent.tag = "Header";
+        if (nodeElement && currentSelection.containsNode(nodeElement, true)) {
+          console.log("event header");
+          props.parent.tag = "Header";
+        }
       }
     );
 
@@ -171,8 +173,10 @@ export default defineComponent({
         currentSelection: Selection;
         currentRange: Range;
       }) => {
-        console.log("event header");
-        props.parent.tag = "UnorderedListItem";
+        if (nodeElement && currentSelection.containsNode(nodeElement, true)) {
+          console.log("event header");
+          props.parent.tag = "UnorderedListItem";
+        }
       }
     );
 
