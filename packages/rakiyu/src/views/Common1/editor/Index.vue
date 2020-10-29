@@ -282,6 +282,7 @@ export default defineComponent({
             @keydown.down="methods.updateCurrent"
             @keydown.left="methods.updateCurrent"
             @keydown.right="methods.updateCurrent"
+            :style="{height: '70vh'}"
           >
             <template v-for="(item, index) in docs.children" :key="index">
               <component :is="item.tag" :doc="item" :parent="parent"></component>
