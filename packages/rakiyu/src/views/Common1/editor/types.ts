@@ -1,10 +1,12 @@
 export interface EndNode {
-  tag: 'TextNode' | 'ImgNode';
+  tag: "TextNode" | "ImgNode";
   data: string;
   className: string;
+  id: string;
 }
 
 export interface ContainerNode {
-  tag: 'DivNode';
+  tag: "DivNode";
   children: (EndNode | ContainerNode)[];
+  id: string;
 }

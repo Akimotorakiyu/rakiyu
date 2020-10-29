@@ -9,6 +9,7 @@ import {
   Component,
   ComponentInternalInstance,
   onUpdated,
+  nextTick,
 } from "vue";
 import { nanoid } from "nanoid";
 import { EditorHub } from "./eventHub";
@@ -35,19 +36,18 @@ export default defineComponent({
       },
     },
   },
-  setup(props: { doc: EndNode; parent: ContainerNode; index: number }) {
+  setup(props: { doc: EndNode; parent: ContainerNode; index: number }, ctx) {
     let instance: ComponentInternalInstance;
-
-    const id = ref(nanoid());
 
     let nodeElement: HTMLElement;
 
     const editorEventHub = inject<EditorHub>("editorHub");
 
-    editorEventHub.eventLite.emit("register-node", id.value, {
+    editorEventHub.eventLite.emit("register-node", props.doc.id, {
       doc: props.doc,
       parent: props.parent,
     });
+
     editorEventHub.eventLite.onLite(
       "bold",
       ({
@@ -83,6 +83,7 @@ export default defineComponent({
                 ...props.doc,
                 data: right,
                 className: (props.doc.className || "") + " bold",
+                id: nanoid(),
               });
             } else if (nodeElement === focusNode.parentNode) {
               let left = props.doc.data.slice(0, focusOffset);
@@ -95,8 +96,20 @@ export default defineComponent({
                   ...props.doc,
                   data: left,
                   className: (props.doc.className || "") + " bold",
+                  id: nanoid(),
                 }
               );
+              nextTick(() => {
+                console.log("re focus", nodeElement);
+                const range = new Range();
+
+                range.setStart(nodeElement.firstChild, 0);
+
+                currentSelection.removeAllRanges();
+                currentSelection.addRange(range);
+
+                currentRange = range;
+              });
             }
           }
           console.log("textnodeelement", nodeElement);
@@ -110,12 +123,17 @@ export default defineComponent({
       console.log("node", nodeElement);
     });
 
+    onUpdated(() => {
+      const temp = nodeElement;
+      nodeElement = instance.refs?.nodeElement as HTMLElement;
+      console.log("update", temp, nodeElement, nodeElement === temp);
+    });
+
     function dealInput(params: Event) {
       console.log("input", params);
     }
 
     return {
-      id,
       methods: {
         dealInput,
       },
@@ -125,9 +143,14 @@ export default defineComponent({
 </script>
 
 <template>
-  <span v-if="doc.tag=='TextNode'" :id="id" ref="nodeElement" :key="id"
+  <span
+    v-if="doc.tag == 'TextNode'"
+    :id="doc.id"
+    ref="nodeElement"
+    :key="doc.id"
     :class="doc.className"
-  >{{ doc.data }}</span>
+    >{{ doc.data }}</span
+  >
   <span v-else>Error </span>
 </template>
 

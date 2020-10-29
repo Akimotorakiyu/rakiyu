@@ -17,7 +17,7 @@ import TextNode from "./TextNode.vue";
 import DivNode from "./DivNode.vue";
 import ImgNode from "./ImgNode.vue";
 import { EventLite } from "./EventLite";
-
+import { nanoid } from "nanoid";
 export default defineComponent({
   components: {
     TextNode,
@@ -87,22 +87,27 @@ export default defineComponent({
     }
     const docs = reactive<ContainerNode>({
       tag: "DivNode",
+      id: nanoid(),
       children: [
         {
           tag: "DivNode",
+          id: nanoid(),
           children: [
             {
               tag: "TextNode",
+              id: nanoid(),
               data: "Hello",
               className: "",
             },
             {
               tag: "TextNode",
+              id: nanoid(),
               data: " World",
               className: "",
             },
             {
               tag: "TextNode",
+              id: nanoid(),
               data: " Ilovechina",
               className: "",
             },
