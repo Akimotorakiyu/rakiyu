@@ -223,61 +223,82 @@ export default defineComponent({
     }
 
     function dealPaste(event: ClipboardEvent) {
-      const text = event.clipboardData.getData("text/plain");
+      // const text = event.clipboardData.getData("text/plain");
 
-      let sel = updateCurrent();
-      editorHub.eventLite.emit("paste", sel, text);
-      console.log(text);
+      // let sel = updateCurrent();
+      // editorHub.eventLite.emit("paste", sel, text);
+      // console.log(text);
       event.preventDefault();
-      // const html = event.clipboardData.getData("text/html");
-      // console.log("dealPaste", himalaya.parse(html));
-      // const data = himalaya.parse(html) as any;
-      // const body = data[0][0];
+      const html = event.clipboardData.getData("text/html");
+      console.log("dealPaste", himalaya.parse(html));
+      const data = himalaya.parse(html) as any;
+      const body = data[0].children[0];
 
-      // const dataList = body.children
-      //   .filter((ele) => {
-      //     return ele.type == "element";
-      //   })
-      //   .map((ele) => {
-      //     const tempNode: ContainerNode = {
-      //       id: "",
-      //       tag: "DivNode",
-      //       children: [],
-      //     };
+      const dataList = body.children
+        .filter((ele) => {
+          return ele.type == "element";
+        })
+        .map((ele) => {
+          const tempNode: ContainerNode = {
+            id: "",
+            tag: "DivNode",
+            children: [],
+          };
 
-      //     const attr = ele.attributes.reduce((acc, element) => {
-      //       acc[element.key] = element.value;
-      //       return acc;
-      //     }, {});
+          const attr = ele.attributes.reduce((acc, element) => {
+            acc[element.key] = element.value;
+            return acc;
+          }, {});
 
-      //     tempNode.id = attr.id;
+          tempNode.id = attr.id;
 
-      //     switch (ele.tagName) {
-      //       case "h1":
-      //         tempNode.tag = "Header";
-      //         break;
-      //       case "div":
-      //         tempNode.tag = "DivNode";
-      //         break;
-      //       case "ul":
-      //         tempNode.tag = "UnorderedListItem";
-      //         break;
-      //       case "ol":
-      //         tempNode.tag = "OrderedListItem";
-      //         break;
+          switch (ele.tagName) {
+            case "h1":
+              tempNode.tag = "Header";
+              break;
+            case "div":
+              tempNode.tag = "DivNode";
+              break;
+            case "ul":
+              tempNode.tag = "UnorderedListItem";
+              break;
+            case "ol":
+              tempNode.tag = "OrderedListItem";
+              break;
 
-      //       default:
-      //         break;
-      //     }
+            default:
+              break;
+          }
 
-      //     tempNode.children=ele.children.filter((ele)=>{
-      //       return ele.type == "element";
-      //     }).map(()=>{
+          tempNode.children = ele.children
+            .filter((ele) => {
+              return ele.type == "element";
+            })
+            .map((ele) => {
+              const tempTextNode: EndNode = {
+                id: "",
+                tag: "TextNode",
+                data: "",
+                className: "",
+              };
 
-      //     })
+              const attr = ele.attributes.reduce((acc, element) => {
+                acc[element.key] = element.value;
+                return acc;
+              }, {});
 
-      //   return {};
-      // });
+              tempTextNode.id = attr.id;
+              tempTextNode.className = attr.class;
+
+              tempTextNode.data = ele.children[0].content;
+              return tempTextNode;
+            });
+
+          return tempNode;
+        });
+
+      console.log(dataList);
+      docs.children.push(...dataList);
     }
 
     function dealCopy(event: ClipboardEvent) {
