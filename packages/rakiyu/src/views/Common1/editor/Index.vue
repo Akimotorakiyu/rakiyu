@@ -9,6 +9,7 @@ import {
   ComponentInternalInstance,
   nextTick,
   ref,
+  computed,
 } from "vue";
 import { EditorHub } from "./eventHub";
 import { ContainerNode, EndNode } from "./types";
@@ -22,6 +23,7 @@ import OrderedListItem from "./OrderedListItem.vue";
 import ImgNode from "./ImgNode.vue";
 import { EventLite } from "./EventLite";
 import { nanoid } from "nanoid";
+import { deepClone } from "../../../util/util";
 export default defineComponent({
   components: {
     TextNode,
@@ -235,9 +237,19 @@ export default defineComponent({
       let sel = updateCurrent();
       editorHub.eventLite.emit("ol", sel);
     }
-
+    let filteredObj = computed(() => {
+      let ignores = ["id", "tag"];
+      function replacer(key, value) {
+        if (ignores.indexOf(key) > -1) {
+          return undefined;
+        }
+        return value;
+      }
+      return JSON.parse(JSON.stringify(docs, replacer));
+    });
     return {
       docs,
+      filteredObj,
       status: reactive({}),
       methods: {
         dealInput,
@@ -279,6 +291,6 @@ export default defineComponent({
   <button @click="methods.makeOl">ol</button>
   <br>
   {{ 
-    (JSON.stringify(docs))
+    (JSON.stringify(filteredObj))
   }}
 </template>
