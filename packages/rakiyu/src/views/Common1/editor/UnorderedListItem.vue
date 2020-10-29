@@ -60,13 +60,21 @@ export default defineComponent({
 </script>
 
 <template>
-  <ul>
-    <li :id="id" ref="nodeElement" :key="id">
+  <!-- <ul> -->
+    <ul :id="id" ref="nodeElement" :key="id">
       <template v-for="(item, index) in doc.children" :key="index">
         <TextNode :doc="item" :parent="doc" :index="index"></TextNode>
       </template>
-    </li>
-  </ul>
+    </ul>
+  <!-- </ul> -->
 </template>
 
-<style lang="stylus"></style>
+<style lang="stylus">
+ul {
+  list-style-type: none;
+
+  &::before {
+    content: ' - ';
+  }
+}
+</style>
