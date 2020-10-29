@@ -9,6 +9,7 @@ import {
   ComponentInternalInstance,
   nextTick,
   ref,
+  computed,
 } from "vue";
 import { EditorHub } from "./eventHub";
 import { ContainerNode, EndNode } from "./types";
@@ -22,6 +23,7 @@ import himalaya from "himalaya";
 import ImgNode from "./ImgNode.vue";
 import { EventLite } from "./EventLite";
 import { nanoid } from "nanoid";
+import { deepClone } from "../../../util/util";
 export default defineComponent({
   components: {
     TextNode,
@@ -303,8 +305,19 @@ export default defineComponent({
       console.log("clipboard");
     }
 
+    let filteredObj = computed(() => {
+      let ignores = ["id", "className", "tag"];
+      function replacer(key, value) {
+        if (ignores.indexOf(key) > -1) {
+          return undefined;
+        }
+        return value;
+      }
+      return JSON.parse(JSON.stringify(docs, replacer));
+    });
     return {
       docs,
+      filteredObj,
       status: reactive({}),
       methods: {
         dealInput,
@@ -326,29 +339,37 @@ export default defineComponent({
 </script>
 
 <template>
-  <div
-    ref="nodeElement"
-    contenteditable
-    class="bg-gray-300 p-4 m-4 rounded-2xl"
-    @click="methods.dealClick"
-    @input="methods.dealInput"
-    @keydown.enter="methods.dealEnter"
-    @keydown.delete="methods.dealDelete"
-    @keydown.up="methods.updateCurrent"
-    @keydown.down="methods.updateCurrent"
-    @keydown.left="methods.updateCurrent"
-    @keydown.right="methods.updateCurrent"
-    @paste="methods.dealPaste"
-    @copy="methods.dealCopy"
-  >
-    <template v-for="(item, index) in docs.children" :key="index">
-      <component :is="item.tag" :doc="item" :parent="parent"></component>
-    </template>
+  <div :style="{ display: 'flex' }">
+    <div :style="{ flex: 2 }">
+      <div
+        ref="nodeElement"
+        contenteditable
+        class="bg-gray-300 p-4 m-4 rounded-2xl"
+        @click="methods.dealClick"
+        @input="methods.dealInput"
+        @keydown.enter="methods.dealEnter"
+        @keydown.delete="methods.dealDelete"
+        @keydown.up="methods.updateCurrent"
+        @keydown.down="methods.updateCurrent"
+        @keydown.left="methods.updateCurrent"
+        @keydown.right="methods.updateCurrent"
+        @paste="methods.dealPaste"
+        @copy="methods.dealCopy"
+        :style="{ height: '70vh' }"
+      >
+        <template v-for="(item, index) in docs.children" :key="index">
+          <component :is="item.tag" :doc="item" :parent="parent"></component>
+        </template>
+      </div>
+      <button @click="methods.makeBold">B</button>
+      <button @click="methods.makeHeader">H</button>
+      <button @click="methods.makeUl">ul</button>
+      <button @click="methods.makeOl">ol</button>
+    </div>
+    <div :style="{ flex: 1 }">
+      <pre :style="{ fontSize: '9px' }">{{
+        JSON.stringify(filteredObj, null, 2)
+      }}</pre>
+    </div>
   </div>
-  <button @click="methods.makeBold">B</button>
-  <button @click="methods.makeHeader">H</button>
-  <button @click="methods.makeUl">ul</button>
-  <button @click="methods.makeOl">ol</button>
-  <br />
-  {{ JSON.stringify(docs, null, 4) }}
 </template>

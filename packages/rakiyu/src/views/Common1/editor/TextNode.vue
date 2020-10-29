@@ -243,7 +243,7 @@ export default defineComponent({
             ((docs.children[i - 1] && docs.children[i - 1].listOrder) || 0) + 1;
           props.parent.listOrder = order;
 
-          // update list after this.
+          // update list after this. todo optimize
           editorEventHub.eventLite.emit("ol-update", {
             index: i + 1,
             order: order + 1,
@@ -254,7 +254,7 @@ export default defineComponent({
 
     //ol update
     editorEventHub.eventLite.onLite("ol-update", ({ index, order }) => {
-      console.log("on ol-update index, order", index, order);
+      // console.log("on ol-update index, order", index, order);
       let i = docs.children.findIndex((o) => o == props.parent);
       if (i === index && props.parent.tag === "OrderedListItem") {
         props.parent.listOrder = order;

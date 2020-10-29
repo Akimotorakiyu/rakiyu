@@ -8,6 +8,6 @@ export default defineComponent({
 
 <template>
   <div>
-    <header>header</header>
+    <header>FlapNote Editor</header>
   </div>
 </template>
