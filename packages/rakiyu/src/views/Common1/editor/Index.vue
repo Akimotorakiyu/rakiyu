@@ -16,6 +16,9 @@ import { ContainerNode, EndNode } from "./types";
 import TextNode from "./TextNode.vue";
 import DivNode from "./DivNode.vue";
 import Header from "./Header.vue";
+import UnorderedListItem from "./UnorderedListItem.vue";
+import OrderedListItem from "./OrderedListItem.vue";
+
 import ImgNode from "./ImgNode.vue";
 import { EventLite } from "./EventLite";
 import { nanoid } from "nanoid";
@@ -25,6 +28,8 @@ export default defineComponent({
     DivNode,
     ImgNode,
     Header,
+    UnorderedListItem,
+    OrderedListItem,
   },
   setup(props) {
     let instance: ComponentInternalInstance;
@@ -227,5 +232,5 @@ export default defineComponent({
   <button @click="methods.makeUl">ul</button>
   <button @click="methods.makeOl">ol</button>
 
-  {{ docs }}
+  {{(docs) }}
 </template>

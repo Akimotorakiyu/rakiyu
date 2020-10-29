@@ -117,7 +117,7 @@ export default defineComponent({
       }
     );
 
-    //
+    //header
     editorEventHub.eventLite.onLite(
       "header",
       ({
@@ -129,6 +129,21 @@ export default defineComponent({
       }) => {
         console.log("event header");
         props.parent.tag = "Header";
+      }
+    );
+
+    //ul
+    editorEventHub.eventLite.onLite(
+      "ul",
+      ({
+        currentSelection,
+        currentRange,
+      }: {
+        currentSelection: Selection;
+        currentRange: Range;
+      }) => {
+        console.log("event header");
+        props.parent.tag = "UnorderedListItem";
       }
     );
 
