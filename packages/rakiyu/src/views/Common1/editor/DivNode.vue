@@ -53,6 +53,7 @@ export default defineComponent({
       id,
       methods: {
         dealInput,
+        nanoid,
       },
     };
   },
@@ -61,7 +62,7 @@ export default defineComponent({
 
 <template>
   <div :id="id" ref="nodeElement" :key="id">
-    <template v-for="(item, index) in doc.children" :key="index">
+    <template v-for="(item, index) in doc.children" :key="item.id">
       <TextNode :doc="item" :parent="doc" :index="index"></TextNode>
     </template>
   </div>
