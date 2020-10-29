@@ -141,7 +141,7 @@ export default defineComponent({
             focusNode,
           } = currentSelection;
           // middle
-          console.log("node", nodeElement, anchorNode, focusNode);
+          // console.log("node", nodeElement, anchorNode, focusNode);
 
           if (
             nodeElement !== anchorNode.parentNode &&
@@ -269,7 +269,7 @@ export default defineComponent({
     onMounted(() => {
       instance = getCurrentInstance();
       nodeElement = instance.refs?.nodeElement as HTMLElement;
-      console.log("node", nodeElement);
+      // console.log("node", nodeElement);
     });
 
     onUpdated(() => {

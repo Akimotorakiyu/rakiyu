@@ -10,6 +10,7 @@ import {
   nextTick,
   ref,
   computed,
+  watchEffect,
 } from "vue";
 import { EditorHub } from "./eventHub";
 import { ContainerNode, EndNode } from "./types";
@@ -72,10 +73,12 @@ export default defineComponent({
     }
 
     provide("editorHub", editorHub);
-
+    function pushNewHistory() {
+      console.log("new history, e", event);
+      historyStack.push(deepClone(docs.children));
+    }
     function dealInput(event: InputEvent) {
-      console.log("e", event);
-
+      pushNewHistory();
       updateCurrent();
 
       const startOffset = currentRange.startOffset;
@@ -190,6 +193,7 @@ export default defineComponent({
       // const node = nodeMap.get(currentSelection.focusNode.parentElement.id);
 
       // console.log("wip: dealEnter", event, node);
+      pushNewHistory();
       event.preventDefault();
       // const temp = node.doc.data;
 
@@ -304,7 +308,6 @@ export default defineComponent({
     function clipboard() {
       console.log("clipboard");
     }
-
     let filteredObj = computed(() => {
       let ignores = ["id", "className", "tag"];
       function replacer(key, value) {
@@ -315,6 +318,18 @@ export default defineComponent({
       }
       return JSON.parse(JSON.stringify(docs, replacer));
     });
+    let historyStack = [];
+    function ctrlKeydown(event) {
+      console.log("ctrl e", event);
+      if (event.key === "z") {
+        let top = historyStack.pop();
+        if (!top) {
+          console.log("no history", top);
+          return;
+        }
+        docs.children = top;
+      }
+    }
     return {
       docs,
       filteredObj,
@@ -332,6 +347,7 @@ export default defineComponent({
         dealPaste,
         dealCopy,
         clipboard,
+        ctrlKeydown,
       },
     };
   },
@@ -353,6 +369,7 @@ export default defineComponent({
         @keydown.down="methods.updateCurrent"
         @keydown.left="methods.updateCurrent"
         @keydown.right="methods.updateCurrent"
+        @keydown.ctrl="methods.ctrlKeydown"
         @paste="methods.dealPaste"
         @copy="methods.dealCopy"
         :style="{ height: '70vh' }"
@@ -366,7 +383,7 @@ export default defineComponent({
       <button @click="methods.makeUl">ul</button>
       <button @click="methods.makeOl">ol</button>
     </div>
-    <div :style="{ flex: 1 }">
+    <div :style="{ width: '100px', flex: 1 }">
       <pre :style="{ fontSize: '9px' }">{{
         JSON.stringify(filteredObj, null, 2)
       }}</pre>
