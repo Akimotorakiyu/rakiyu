@@ -6,7 +6,7 @@ export interface EndNode {
 }
 
 export interface ContainerNode {
-  tag: 'DivNode' | 'Header';
+  tag: 'DivNode' | 'Header' | 'UnorderedListItem' | 'OrderListItem';
   children: (EndNode | ContainerNode)[];
   id: string;
 }
