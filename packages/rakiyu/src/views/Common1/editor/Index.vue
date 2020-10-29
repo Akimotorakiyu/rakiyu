@@ -15,6 +15,7 @@ import { ContainerNode, EndNode } from "./types";
 
 import TextNode from "./TextNode.vue";
 import DivNode from "./DivNode.vue";
+import Header from "./Header.vue";
 import ImgNode from "./ImgNode.vue";
 import { EventLite } from "./EventLite";
 
@@ -23,6 +24,7 @@ export default defineComponent({
     TextNode,
     DivNode,
     ImgNode,
+    Header,
   },
   setup(props) {
     let instance: ComponentInternalInstance;
@@ -165,6 +167,18 @@ export default defineComponent({
       let sel = updateCurrent();
       editorHub.eventLite.emit("bold", sel);
     }
+    function makeHeader() {
+      let sel = updateCurrent();
+      editorHub.eventLite.emit("header", sel);
+    }
+    function makeUl() {
+      let sel = updateCurrent();
+      editorHub.eventLite.emit("ul", sel);
+    }
+    function makeOl() {
+      let sel = updateCurrent();
+      editorHub.eventLite.emit("Ol", sel);
+    }
 
     return {
       docs,
@@ -176,6 +190,9 @@ export default defineComponent({
         dealClick,
         updateCurrent,
         makeBold,
+        makeHeader,
+        makeUl,
+        makeOl,
       },
     };
   },
@@ -200,7 +217,10 @@ export default defineComponent({
       <component :is="item.tag" :doc="item" :parent="parent"></component>
     </template>
   </div>
-  <button @click="methods.makeBold">bold</button>
+  <button @click="methods.makeBold">B</button>
+  <button @click="methods.makeHeader">H</button>
+  <button @click="methods.makeUl">ul</button>
+  <button @click="methods.makeOl">ol</button>
 
   {{ docs }}
 </template>

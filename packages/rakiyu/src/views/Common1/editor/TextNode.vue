@@ -57,6 +57,8 @@ export default defineComponent({
         currentSelection: Selection;
         currentRange: Range;
       }) => {
+        console.log("event bold");
+
         if (nodeElement && currentSelection.containsNode(nodeElement, true)) {
           let {
             anchorNode,
@@ -65,7 +67,7 @@ export default defineComponent({
             focusNode,
           } = currentSelection;
           // middle
-          console.log("flag", nodeElement, anchorNode, focusNode);
+          console.log("node", nodeElement, anchorNode, focusNode);
 
           if (
             nodeElement !== anchorNode.parentNode &&
@@ -76,7 +78,6 @@ export default defineComponent({
             // start, end
             if (nodeElement === anchorNode.parentNode) {
               let right = props.doc.data.slice(anchorOffset);
-              console.log("split right", right);
 
               props.doc.data = props.doc.data.slice(0, anchorOffset);
               props.parent.children.splice(props.index + 1, 0, {
@@ -99,8 +100,22 @@ export default defineComponent({
               );
             }
           }
-          console.log("textnodeelement", nodeElement);
         }
+      }
+    );
+
+    //
+    editorEventHub.eventLite.onLite(
+      "header",
+      ({
+        currentSelection,
+        currentRange,
+      }: {
+        currentSelection: Selection;
+        currentRange: Range;
+      }) => {
+        console.log("event header");
+        props.parent.tag = "Header";
       }
     );
 
