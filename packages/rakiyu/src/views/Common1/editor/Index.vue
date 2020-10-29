@@ -18,7 +18,7 @@ import DivNode from "./DivNode.vue";
 import Header from "./Header.vue";
 import UnorderedListItem from "./UnorderedListItem.vue";
 import OrderedListItem from "./OrderedListItem.vue";
-
+import himalaya from "himalaya";
 import ImgNode from "./ImgNode.vue";
 import { EventLite } from "./EventLite";
 import { nanoid } from "nanoid";
@@ -219,6 +219,69 @@ export default defineComponent({
       updateCurrent();
       // event.preventDefault();
     }
+
+    function dealPaste(event: ClipboardEvent) {
+      const text = event.clipboardData.getData("text/plain");
+
+      let sel = updateCurrent();
+      editorHub.eventLite.emit("paste", sel, text);
+      console.log(text);
+      event.preventDefault();
+      // const html = event.clipboardData.getData("text/html");
+      // console.log("dealPaste", himalaya.parse(html));
+      // const data = himalaya.parse(html) as any;
+      // const body = data[0][0];
+
+      // const dataList = body.children
+      //   .filter((ele) => {
+      //     return ele.type == "element";
+      //   })
+      //   .map((ele) => {
+      //     const tempNode: ContainerNode = {
+      //       id: "",
+      //       tag: "DivNode",
+      //       children: [],
+      //     };
+
+      //     const attr = ele.attributes.reduce((acc, element) => {
+      //       acc[element.key] = element.value;
+      //       return acc;
+      //     }, {});
+
+      //     tempNode.id = attr.id;
+
+      //     switch (ele.tagName) {
+      //       case "h1":
+      //         tempNode.tag = "Header";
+      //         break;
+      //       case "div":
+      //         tempNode.tag = "DivNode";
+      //         break;
+      //       case "ul":
+      //         tempNode.tag = "UnorderedListItem";
+      //         break;
+      //       case "ol":
+      //         tempNode.tag = "OrderedListItem";
+      //         break;
+
+      //       default:
+      //         break;
+      //     }
+
+      //     tempNode.children=ele.children.filter((ele)=>{
+      //       return ele.type == "element";
+      //     }).map(()=>{
+
+      //     })
+
+      //   return {};
+      // });
+    }
+
+    function dealCopy(event: ClipboardEvent) {
+      console.log("dealCopy", event, event.clipboardData);
+    }
+
     function makeBold() {
       let sel = updateCurrent();
       editorHub.eventLite.emit("bold", sel);
@@ -236,6 +299,10 @@ export default defineComponent({
       editorHub.eventLite.emit("ol", sel);
     }
 
+    function clipboard() {
+      console.log("clipboard");
+    }
+
     return {
       docs,
       status: reactive({}),
@@ -249,6 +316,9 @@ export default defineComponent({
         makeHeader,
         makeUl,
         makeOl,
+        dealPaste,
+        dealCopy,
+        clipboard,
       },
     };
   },
@@ -268,6 +338,8 @@ export default defineComponent({
     @keydown.down="methods.updateCurrent"
     @keydown.left="methods.updateCurrent"
     @keydown.right="methods.updateCurrent"
+    @paste="methods.dealPaste"
+    @copy="methods.dealCopy"
   >
     <template v-for="(item, index) in docs.children" :key="index">
       <component :is="item.tag" :doc="item" :parent="parent"></component>
@@ -277,8 +349,6 @@ export default defineComponent({
   <button @click="methods.makeHeader">H</button>
   <button @click="methods.makeUl">ul</button>
   <button @click="methods.makeOl">ol</button>
-  <br>
-  {{ 
-    (JSON.stringify(docs))
-  }}
+  <br />
+  {{ JSON.stringify(docs, null, 4) }}
 </template>

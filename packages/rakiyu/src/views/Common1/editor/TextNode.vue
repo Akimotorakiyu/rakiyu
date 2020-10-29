@@ -50,6 +50,51 @@ export default defineComponent({
     });
 
     editorEventHub.eventLite.onLite(
+      "paste",
+      (
+        {
+          currentSelection,
+          currentRange,
+        }: {
+          currentSelection: Selection;
+          currentRange: Range;
+        },
+        text: string
+      ) => {
+        if (nodeElement && currentSelection.containsNode(nodeElement, true)) {
+          console.log("event paste");
+          const addText = text.replace(/[\r\n]/g, "");
+          let {
+            anchorNode,
+            anchorOffset,
+            focusOffset,
+            focusNode,
+          } = currentSelection;
+
+          const left = props.doc.data.slice(0, focusOffset);
+          const right = props.doc.data.slice(focusOffset);
+
+          props.doc.data = left + addText + right;
+
+          nextTick(() => {
+            console.log("re focus", nodeElement);
+            const range = new Range();
+
+            range.setStart(
+              nodeElement.firstChild,
+              focusOffset + addText.length
+            );
+
+            currentSelection.removeAllRanges();
+            currentSelection.addRange(range);
+
+            currentRange = range;
+          });
+        }
+      }
+    );
+
+    editorEventHub.eventLite.onLite(
       "enter",
       ({
         currentSelection,
