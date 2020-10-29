@@ -60,9 +60,21 @@ export default defineComponent({
 </script>
 
 <template>
-  <h1 :id="id" ref="nodeElement" :key="id">
+<ol>
+  <li :id="id" ref="nodeElement" :key="id" :listOrder="doc.listOrder">
     <template v-for="(item, index) in doc.children" :key="index">
       <TextNode :doc="item" :parent="doc" :index="index"></TextNode>
     </template>
-  </h1>
+  </li>
+</ol>
 </template>
+
+<style lang="stylus">
+ol {
+  list-style-type: none;
+
+  li::before {
+    content: attr(listOrder) '.';
+  }
+}
+</style>

@@ -180,6 +180,47 @@ export default defineComponent({
       }
     );
 
+    //ol
+    editorEventHub.eventLite.onLite(
+      "ol",
+      ({
+        currentSelection,
+        currentRange,
+      }: {
+        currentSelection: Selection;
+        currentRange: Range;
+      }) => {
+        if (nodeElement && currentSelection.containsNode(nodeElement, true)) {
+          console.log("event ol");
+          props.parent.tag = "OrderedListItem";
+          let i = docs.children.findIndex((o) => o == props.parent);
+          let order =
+            ((docs.children[i - 1] && docs.children[i - 1].listOrder) || 0) + 1;
+          props.parent.listOrder = order;
+
+          // update list after this.
+          editorEventHub.eventLite.emit("ol-update", {
+            index: i + 1,
+            order: order + 1,
+          });
+        }
+      }
+    );
+
+    //ol update
+    editorEventHub.eventLite.onLite("ol-update", ({ index, order }) => {
+      console.log("on ol-update index, order", index, order);
+      let i = docs.children.findIndex((o) => o == props.parent);
+      if (i === index && props.parent.tag === "OrderedListItem") {
+        props.parent.listOrder = order;
+        // update list after this.
+        editorEventHub.eventLite.emit("ol-update", {
+          index: index + 1,
+          order: order + 1,
+        });
+      }
+    });
+
     onMounted(() => {
       instance = getCurrentInstance();
       nodeElement = instance.refs?.nodeElement as HTMLElement;

@@ -97,7 +97,43 @@ export default defineComponent({
       id: nanoid(),
       children: [
         {
-          tag: "DivNode",
+          tag: "Header", //
+          id: nanoid(),
+          children: [
+            {
+              tag: "TextNode",
+              data: "Welcome",
+              id: nanoid(),
+              className: "",
+            },
+            {
+              tag: "TextNode",
+              data: " to Beijing",
+              id: nanoid(),
+              className: "",
+            },
+          ],
+        },
+        {
+          tag: "DivNode", //
+          id: nanoid(),
+          children: [
+            {
+              tag: "TextNode",
+              data: "Welcome",
+              id: nanoid(),
+              className: "",
+            },
+            {
+              tag: "TextNode",
+              data: " to Beijing",
+              id: nanoid(),
+              className: "",
+            },
+          ],
+        },
+        {
+          tag: "DivNode", //paragraph
           id: nanoid(),
           children: [
             {
@@ -112,31 +148,36 @@ export default defineComponent({
               data: " World",
               className: "",
             },
-            {
-              tag: "TextNode",
-              id: nanoid(),
-              data: " Ilovechina",
-              className: "",
-            },
             // {
             //   tag: "ImgNode",
             //   data: "./happy.gif",
             // },
           ],
         },
-        // {
-        //   tag: "DivNode",
-        //   children: [
-        //     {
-        //       tag: "TextNode",
-        //       data: "测试",
-        //     },
-        //     {
-        //       tag: "TextNode",
-        //       data: "测试2",
-        //     },
-        //   ],
-        // },
+        {
+          tag: "DivNode", //paragraph
+          id: nanoid(),
+          children: [
+            {
+              tag: "TextNode",
+              id: nanoid(),
+              data: "I",
+              className: "",
+            },
+            {
+              tag: "TextNode",
+              id: nanoid(),
+              data: " Love",
+              className: "",
+            },
+            {
+              tag: "TextNode",
+              id: nanoid(),
+              data: " China",
+              className: "",
+            },
+          ],
+        },
       ],
     });
 
@@ -192,7 +233,7 @@ export default defineComponent({
     }
     function makeOl() {
       let sel = updateCurrent();
-      editorHub.eventLite.emit("Ol", sel);
+      editorHub.eventLite.emit("ol", sel);
     }
 
     return {
@@ -236,6 +277,8 @@ export default defineComponent({
   <button @click="methods.makeHeader">H</button>
   <button @click="methods.makeUl">ul</button>
   <button @click="methods.makeOl">ol</button>
-
-  {{(docs) }}
+  <br>
+  {{ 
+    (JSON.stringify(docs))
+  }}
 </template>
